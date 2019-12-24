@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>用户登录</title>
+		<link rel="stylesheet" href="css/login.css" />
+	</head>
+
+	<body>
+		<!--登录区主体开始-->
+		<div id="main">
+			<!--头像区域开始-->
+			<div id="header-pic">
+
+			</div>
+
+			<!--头像区域结束-->
+
+			<!--账号密码区开始-->
+
+			<div id="accout">
+				<div class="input">
+					<input id="empLoginName" name="empLoginName" type="text" placeholder="please input username" />
+				</div>
+
+				<div class="input">
+					<input id="empPwd" name="empPwd" type="password" placeholder="please input password" />
+
+				</div>
+
+			</div>
+			<!--账号密码区结束-->
+
+			<!--登录按钮开始-->
+			<input id="loginBtn" type="button" value="Sign In" class="login-btn" />
+
+			<!--登录按钮结束-->
+			<!--登录区底部开始-->
+
+			<div id="footer">
+				<a href="https:\\www.baidu.com"> Forget Password</a>
+
+			</div>
+			<!--登录区底部结束-->
+		</div>
+
+		<!--登录区主体结束-->
+		
+		
+		<script type="text/javascript" src="js/jquery-3.4.1.js" ></script>
+		<script type="text/javascript" src="js/global.js" ></script>
+		<script src="js/layer/layer.js" type="text/javascript" charset="utf-8"></script>
+		
+		<script type="text/javascript">
+			
+			//表单验证函数
+			function checkForm() {
+				
+				//用户名
+				var empLoginName = $('#empLoginName');
+				
+				if (empLoginName.val() == '' || empLoginName.val().length > 10) {
+					layer.msg('用户名不能为空且最多10个字符');
+					empLoginName.focus();
+					return false;
+				}
+				
+				//密码验证
+				var empPwd = $('#empPwd');
+				
+				if (empPwd.val() == '' || empPwd.val().length > 20) {
+					layer.msg('密码不能为空且最多16字符');
+					empPwd.select();
+					return false;
+				}
+				
+				return true;				
+			}
+			
+			$('#loginBtn').click(function(){
+				
+				//调用验证函数
+				if(!checkForm())
+				return ;
+			
+				var params= {
+					empLoginName:$('#empLoginName').val(),
+					empPwd:$('#empPwd').val()
+				}
+				
+				//调用后端功能
+				$.post(baseUrl+'/emp/login',params,function(data){
+					
+					if(data==1){
+						
+						alert("用户名无效");
+					}else if(data==2)
+					{
+						
+						alert("密码错误");
+					}else if(data==3)
+					{
+						layer.msg("登录成功");
+						setTimeout(function(){
+							
+						location.href='index.html'
+							
+						},1000);
+					}
+					
+				});
+
+			});
+			
+		</script>
+	</body>
+
+
+	
+</html>

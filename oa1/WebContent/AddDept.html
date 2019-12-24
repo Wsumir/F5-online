@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="js/bootstrap/css/bootstrap.css" />
+	</head>
+	<body>
+		<div class="container">
+			
+			<ol class="breadcrumb">
+				<li><a href="#">OA系统</a></li>
+				<li><a href="#">部门管理</a></li>
+				<li>增加部门</li>
+			</ol>
+			
+			<h2 class="page-header">增加新部门</h2>
+			
+			<form class="form-horizontal" action="dept/add" method="post">
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">部门名称</label>
+					<div class="col-sm-8">
+						<input type="text" placeholder="请输入部门名称" id="deptName" name="deptName" class="form-control"/>
+					</div>
+				</div>	
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">部门地址</label>
+					<div class="col-sm-8">
+						<input type="text" placeholder="请输入部门地址" id="deptLoc" name="deptLoc" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">					
+					<div class="col-sm-offset-2 col-sm-8">
+						<input id="addBtn" type="button" value="增加部门" class="btn btn-primary" />
+						<input type="button" value="返回" class="btn btn-warning" />
+					</div>
+				</div>
+				
+			</form>	
+		</div>
+		
+		<script type="text/javascript" src="js/jquery-3.4.1.js" ></script>
+		<script type="text/javascript" src="js/global.js" ></script>
+		<script src="js/layer/layer.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			
+			//表单验证函数
+			//表单验证函数
+			function checkForm() {
+				
+				//部门名称
+				var deptName = $('#deptName');
+				
+				if (deptName.val() == '' || deptName.val().length > 10) {
+					layer.msg('部门名称不能为空且最多10个字符');
+					deptName.focus();
+					return false;
+				}
+				
+				//部门地址
+				var deptLoc = $('#deptLoc');
+				
+				if (deptLoc.val() == '' || deptLoc.val().length > 20) {
+					alert('部门地址不能为空且最多20字符');
+					deptLoc.select();
+					return false;
+				}
+				
+				return true;				
+			}
+		
+			
+			$('#addBtn').click(function(){
+				
+				//调用验证函数
+				if(!checkForm())
+				return ;
+				
+				var params= {
+					deptName:$('#deptName').val(),
+					deptLoc:$('#deptLoc').val()
+				}
+				
+				//调用后端功能
+				$.post(baseUrl+'/dept/add',params,function(data){
+					alert('增加部门成功');
+					
+					
+				});
+
+			
+			});
+			
+				
+				
+				
+		</script>
+		
+	</body>
+</html>
