@@ -62,6 +62,7 @@ public class CommonFilter implements Filter {
 		chain.doFilter(request, response);
 		**/
 		chain.doFilter(req, resp);
+		System.out.println("aaa");
 		
 	}
 
