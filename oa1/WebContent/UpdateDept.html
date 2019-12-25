@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>部门增加</title>
+		<title>修改部门</title>
 		<link rel="stylesheet" href="js/bootstrap/css/bootstrap.css" />
 	</head>
 	<body>
@@ -11,12 +11,12 @@
 			<ol class="breadcrumb">
 				<li><a href="#">OA系统</a></li>
 				<li><a href="#">部门管理</a></li>
-				<li>增加部门</li>
+				<li>修改部门</li>
 			</ol>
 			
-			<h2 class="page-header">增加新部门</h2>
+			<h2 class="page-header">修改部门</h2>
 			
-			<form class="form-horizontal" action="dept/add" method="post">
+			<form class="form-horizontal" id="form1">
 				<div class="form-group">
 					<label for="" class="col-sm-2 control-label">部门名称</label>
 					<div class="col-sm-8">
@@ -31,20 +31,29 @@
 				</div>
 				<div class="form-group">					
 					<div class="col-sm-offset-2 col-sm-8">
-						<input id="addBtn" type="button" value="增加部门" class="btn btn-primary" />
-						<input type="button" value="返回" class="btn btn-warning" onclick="history.back();"/>
+						<input type="hidden" id="deptId" name="deptId" />
+						<input id="updateBtn" type="button" value="修改部门" class="btn btn-primary" />
+						<input type="button" value="返回" class="btn btn-warning" onclick="history.back();" />
 					</div>
-				</div>
-				
-			</form>	
+				</div>				
+			</form>
 		</div>
 		
 		<script type="text/javascript" src="js/jquery-3.4.1.js" ></script>
 		<script type="text/javascript" src="js/global.js" ></script>
-		<script src="js/layer/layer.js" type="text/javascript" charset="utf-8"></script>
-		<script type="text/javascript">
-			
-			//表单验证函数
+		<script type="text/javascript" src="js/layer/layer.js" ></script>
+		<script type="text/javascript" src="js/param.js" ></script>		
+		<script>						
+			//获得部门id
+			var deptId = getParam('deptId');
+						
+			//调用后端功能，获取部门数据，表单回显
+			$.getJSON(baseUrl + '/dept/queryById',{deptId:deptId},function(data){
+				$('#deptName').val(data.deptName);
+				$('#deptLoc').val(data.deptLoc);
+				$('#deptId').val(data.deptId);
+			});						
+		
 			//表单验证函数
 			function checkForm() {
 				
@@ -61,7 +70,7 @@
 				var deptLoc = $('#deptLoc');
 				
 				if (deptLoc.val() == '' || deptLoc.val().length > 20) {
-					alert('部门地址不能为空且最多20字符');
+					layer.msg('部门地址不能为空且最多20字符');
 					deptLoc.select();
 					return false;
 				}
@@ -69,35 +78,29 @@
 				return true;				
 			}
 		
-			
-			$('#addBtn').click(function(){
+			//修改部门
+			$('#updateBtn').click(function(){
 				
 				//调用验证函数
-				if(!checkForm())
-				return ;
+				if ( !checkForm() )
+					return;				
 				
-				var params= {
-					deptName:$('#deptName').val(),
-					deptLoc:$('#deptLoc').val()
-				}
+				//请求参数
+				var params = $('#form1').serialize();
 				
+				alert(params);
 				//调用后端功能
-				$.post(baseUrl+'/dept/add',params,function(data){
-					alert('增加部门成功');
+				$.post(baseUrl + '/dept/update',params,function(data) {
+					
+					layer.msg('修改部门成功');
+					
 					setTimeout(function(){
-						
 						location.href = 'QueryDept.html';
 					},500);
 					
 				});
-
-			
-			});
-			
 				
-				
-				
+			});					
 		</script>
-		
 	</body>
 </html>

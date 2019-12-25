@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>部门列表</title>
+		<link rel="stylesheet" href="js/bootstrap/css/bootstrap.css" />		
+	</head>
+	<body>
+		<div class="container">
+			<ol class="breadcrumb">
+				<li><a href="#">OA系统</a></li>
+				<li><a href="#">部门管理</a></li>
+				<li>部门列表</li>
+			</ol>
+			
+			<h2 class="page-header">部门列表</h2>
+			
+			<table class="table table-hover table-bordered">
+				<thead>
+					<tr>
+						<td>部门编号</td>
+						<td>部门名称</td>
+						<td>部门地址</td>
+						<td>操作</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr v-for="(dept,index) in deptList">
+						<td>{{dept.deptId}}</td>
+						<td>{{dept.deptName}}</td>
+						<td>{{dept.deptLoc}}</td>
+						<td>
+							<button type="button" class="btn btn-primary btn-xs" @click="toUpdate(dept.deptId)">
+								<span class="glyphicon glyphicon-pencil"></span>
+								修改
+							</button>
+							<button type="button" class="btn btn-danger btn-xs" @click="del(index,dept.deptId)">
+								<span class="glyphicon glyphicon-trash"></span>
+								删除
+							</button>
+						</td>
+					</tr>					
+				</tbody>
+			</table>
+			
+			<div class="row">
+				<div class="col-sm-offset-8 col-sm-4">
+					<a href="AddDept.html" class="btn btn-success btn-block">增加新部门</a>
+				</div>
+			</div>
+			
+		</div>
+		
+		<script type="text/javascript" src="js/jquery-3.4.1.js" ></script>
+		<script type="text/javascript" src="js/global.js" ></script>
+		<script type="text/javascript" src="js/layer/layer.js" ></script>
+		<script type="text/javascript" src="js/vue.js" ></script>
+		<script>
+			var vue = new Vue({
+				el:'.container',
+				data:{
+					deptList:[]				
+				},
+				methods:{
+					//查询数据
+					query:function(){
+						
+						//调用后端功能
+						$.getJSON(baseUrl + '/dept/query',function(data){							
+							vue.deptList = data;							
+						});						
+					},
+					//删除方法
+					del:function(index,deptId){
+						
+						if (!window.confirm('确定要删除此部门吗')) {
+							return;
+						}						
+						
+						//调用后端功能
+						$.get(baseUrl + '/dept/del',{deptId:deptId},function(data){
+							layer.msg('删除部门成功');	
+							
+							setTimeout(function(){
+								//location.reload();//重新加载当前网页
+								vue.deptList.splice(index,1); //前端删除
+							},1000);
+						});
+						
+					},
+					//修改方法
+					toUpdate:function(deptId) {
+						location.href = 'UpdateDept.html?deptId=' + deptId;
+					}
+				},
+				mounted:function(){ //网页渲染完毕调用
+					this.query();
+				}
+			});			
+		</script>
+	</body>
+</html>
