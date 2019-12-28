@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>expatriate</title>
+		<link rel="stylesheet" href="../js/bootstrap/css/bootstrap.css" />
+		
+		<style type="text/css">
+			a{
+				color: white;
+			}
+			h2{
+				color: white;
+			}
+		</style>
+	</head>
+
+	<body style="background-color: #666;">
+
+		<div class="container">
+			
+			<ol class="breadcrumb" style="background-color: #545353;  width: 300px;">
+				<li><a href="#">OA系统</a></li>
+				<li><a href="#">外派信息</a></li>
+			</ol>
+			
+			<h2 class="page-header" >外派人员信息</h2>
+			<br><br>
+			
+				
+			<table class="table table-hover table-bordered">
+				<thead>
+					<tr>
+						<td>外派编号</td>
+						<td>员工编号</td>
+						<td>员工姓名</td>
+						<td>外派公司</td>
+						<td>外派时间</td>
+						<td>外派天数</td>
+						<td>操作</td>
+						
+					</tr>
+				</thead>
+				<tbody>
+					<tr v-for="(expatriate,index) in expatriateList">
+						<td>{{expatriate.expatriateId}}</td>
+						<td>{{expatriate.emp.empId}}</td>
+						<td>{{expatriate.emp.empName}}</td>
+						<td>{{expatriate.expatriateCompany}}</td>
+						<td>{{expatriate.expatriateDate}}</td>
+						<td>{{expatriate.expatriateDays}}</td>
+						<td>
+							<button type="button" class="btn btn-default btn-xs" >
+								<span class="glyphicon glyphicon-pencil"></span>
+								修改
+							</button>
+							<button type="button" class="btn btn-default btn-xs" @click="del(index,expatriate.expatriateId)">
+								<span class="glyphicon glyphicon-trash"></span>
+								删除
+							</button>
+						</td>
+					</tr>					
+				</tbody>
+			</table>
+			
+			<div class="row">
+				<div class="col-sm-offset-8 col-sm-4">
+					<a href="AddExpatriate.html" class="btn btn-default btn-block">增加外派人员</a>
+				</div>
+			</div>
+			
+			
+		</div>
+
+					
+		<script type="text/javascript" src="../js/jquery-3.4.1.js" ></script>
+		<script type="text/javascript" src="../js/URL.js" ></script>
+		<script type="text/javascript" src="../js/layer/layer.js" ></script>
+		<script type="text/javascript" src="../js/vue.js"></script>
+		<script>
+			var vue = new Vue({
+				el:'.container',
+				data:{
+					expatriateList:[]				
+				},
+				methods:{
+					//查询数据
+					query:function(){
+						
+						//调用后端功能
+						$.getJSON(baseUrl + '/expatriate/query',function(data){							
+							vue.expatriateList = data;							
+						});						
+					},
+					
+					//删除方法
+					del:function(index,expatriateId){
+						
+						if (!window.confirm('确定要删除信息吗？')) {
+							return;
+						}						
+						
+						//调用后端功能
+						$.get(baseUrl + '/expatriate/delete',{expatriateId:expatriateId},function(data){
+							layer.msg('删除部门成功');	
+							
+							setTimeout(function(){
+								//location.reload();//重新加载当前网页
+								vue.expatriateList.splice(index,1); //前端删除
+							},1000);
+						});
+						
+					},
+				},
+				mounted:function(){ //网页渲染完毕调用
+					this.query();
+				}
+			});	
+			
+			
+			
+		</script>
+			
+
+	</body>
+
+</html>

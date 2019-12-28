@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dlnu.F5.dao.ExpatriateMapper">
+
+
+	<resultMap id="BaseResultMap" type="com.dlnu.F5.pojo.Expatriate">
+		<id column="expatriate_id" property="expatriateId" jdbcType="INTEGER" />
+		<result column="expatriate_company" property="expatriateCompany"
+			jdbcType="VARCHAR" />
+		<result column="expatriate_date" property="expatriateDate"
+			jdbcType="DATE" />
+		<result column="expatriate_days" property="expatriateDays"
+			jdbcType="INTEGER" />
+
+		<!-- 多对一关联职员 -->
+		<association property="emp" javaType="com.dlnu.F5.pojo.Emp">
+			<id column="EMP_ID" property="empId" jdbcType="INTEGER" />
+			<result column="emp_name" property="empName" jdbcType="VARCHAR" />
+			<result column="emp_login_name" property="empLoginName"
+				jdbcType="VARCHAR" />
+			<result column="emp_pwd" property="empPwd" jdbcType="VARCHAR" />
+			<result column="emp_email" property="empEmail" jdbcType="VARCHAR" />
+			<result column="emp_phone" property="empPhone" jdbcType="VARCHAR" />
+			<result column="emp_hiredate" property="empHiredate" jdbcType="DATE" />
+			<result column="emp_salary" property="empSalary" jdbcType="INTEGER" />
+			<result column="emp_info" property="empInfo" jdbcType="VARCHAR" />
+		</association>
+
+	</resultMap>
+
+
+	<select id="query" resultMap="BaseResultMap" parameterType="java.lang.String">
+		SELECT *
+		FROM expatriate,emp
+		WHERE expatriate.`emp_id`=emp.`emp_id`
+	</select>
+
+	<select id="queryById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		SELECT *
+		FROM expatriate
+		WHERE expatriate_id=#{expatriateId}
+	</select>
+
+	<insert id="insert" parameterType="com.dlnu.F5.pojo.Expatriate">
+		insert into expatriate
+		(expatriate_id, emp_id, expatriate_company,
+		expatriate_date,
+		expatriate_days
+		)
+		values (
+		default,
+		#{emp.empId,jdbcType=INTEGER},
+		#{expatriateCompany,jdbcType=VARCHAR},
+		#{expatriateDate,jdbcType=DATE},
+		#{expatriateDays,jdbcType=INTEGER}
+		)
+	</insert>
+
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from expatriate where expatriate_id=#{expatriateId}
+	</delete>
+
+</mapper>

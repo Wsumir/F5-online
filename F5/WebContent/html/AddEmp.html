@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>增加员工</title>
+		<link rel="stylesheet" href="../js/bootstrap/css/bootstrap.css" />
+		<link rel="stylesheet" href="../js/datetimepicker/jquery.datetimepicker.css" />
+	</head>
+	<body>
+		<div class="container">
+			
+			<ol class="breadcrumb">
+				<li><a href="#">OA系统</a></li>
+				<li><a href="#">员工管理</a></li>
+				<li>增加</li>
+			</ol>
+			
+			<h2 class="page-header">增加新员工</h2>
+			
+			<form class="form-horizontal" id="form1">
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">员工姓名</label>
+					<div class="col-sm-8">
+						<input type="text" placeholder="请输入员工姓名" id="empName" name="empName" class="form-control"/>
+					</div>
+				</div>	
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">员工登录名</label>
+					<div class="col-sm-8">
+						<input type="text" placeholder="请输入员工登录名" id="empLoginName" name="empLoginName" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">设置密码</label>
+					<div class="col-sm-8">
+						<input type="password" placeholder="请输入员工登录密码" id="empPwd" name="empPwd" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">确认密码</label>
+					<div class="col-sm-8">
+						<input type="password" placeholder="再次输入密码" id="empPwd2" name="empPwd2" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">邮箱</label>
+					<div class="col-sm-8">
+						<input type="text" placeholder="请输入邮箱" id="empEmail" name="empEmail" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">电话号码</label>
+					<div class="col-sm-8">
+						<input type="text" placeholder="请输入电话号码" id="empPhone" name="empPhone" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">入职日期</label>
+					<div class="col-sm-8">
+						<input type="text" readonly placeholder="请选择入职日期" id="empHiredate" name="empHiredate" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">工资</label>
+					<div class="col-sm-8">
+						<input type="text" placeholder="请输入薪资" id="empSalary" name="empSalary" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">部门</label>
+					<div class="col-sm-8">
+						<select name="dept.deptId" id="deptId" class="form-control">
+							<option value="">请选择部门</option>							
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">职务</label>
+					<div class="col-sm-8">
+						<select name="job.jobId" id="jobId" class="form-control">
+							<option value="">请选择职务</option>
+							<option value="2">部门经理</option>
+							<option value="3">主管</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">职务</label>
+					<div class="col-sm-8">
+						<textarea id="empInfo" name="empInfo" placeholder="请输入员工个人简介" class="form-control"></textarea>
+					</div>
+				</div>
+				<div class="form-group">					
+					<div class="col-sm-offset-2 col-sm-8">
+						<input id="addBtn" type="button" value="增加员工" class="btn btn-primary" />
+						<input type="button" value="返回" class="btn btn-warning" onclick="history.back();" />
+					</div>
+				</div>				
+			</form>
+		</div>
+		
+		<script type="text/javascript" src="../js/jquery-3.4.1.js" ></script>
+		<script type="text/javascript" src="../js/global.js" ></script>
+		<script type="text/javascript" src="../js/layer/layer.js" ></script>
+		<script type="text/javascript" src="../js/datetimepicker/jquery.datetimepicker.js" ></script>
+		<script>	
+			// 给文本框绑定日历控件
+			$('#empHiredate').datetimepicker({
+				lang:'ch',
+				format:'Y-m-d',
+				formatDate:'Y-m-d',
+				timepicker:false
+			});
+			
+			//动态生成部门列表
+			$.getJSON(baseUrl + '/dept/query',function(data) {
+				
+				$.each(data, function(index,item) {
+					var opt = '<option value="' + item.deptId + '">' + item.deptName + '</option>';
+					$('#deptId').append(opt);	
+				});
+								
+			});		
+			
+			//动态生成职务列表
+			$.getJSON(baseUrl + '/job/query',function(data) {
+				
+				$.each(data, function(index,item) {
+					var opt = '<option value="' + item.jobId + '">' + item.jobName + '</option>';
+					$('#jobId').append(opt);	
+				});
+								
+			});	
+		
+			//表单验证函数
+			function checkForm() {
+				
+				
+				
+				return true;				
+			}
+		
+			//增加员工
+			$('#addBtn').click(function(){
+				
+				//调用验证函数
+				if ( !checkForm() )
+					return;				
+				
+				//请求参数
+				var params = $('#form1').serialize();
+				
+				//调用后端功能
+				$.post(baseUrl + '/emp/add',params,function(data) {
+					
+					layer.msg('增加员工成功');
+					
+					setTimeout(function(){
+						
+					},500);
+					
+				});
+				
+			});					
+		</script>
+	</body>
+</html>

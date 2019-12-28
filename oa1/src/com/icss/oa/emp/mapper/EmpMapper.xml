@@ -1,27 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.icss.oa.emp.dao.EmpMapper">
-	
 	<resultMap id="BaseResultMap" type="com.icss.oa.emp.pojo.Emp">
 		<id column="emp_id" property="empId" jdbcType="INTEGER" />
 		<result column="emp_name" property="empName" jdbcType="VARCHAR" />
-		<result column="emp_login_name" property="empLoginName" jdbcType="VARCHAR" />
+		<result column="emp_login_name" property="empLoginName"
+			jdbcType="VARCHAR" />
 		<result column="emp_pwd" property="empPwd" jdbcType="VARCHAR" />
 		<result column="emp_email" property="empEmail" jdbcType="VARCHAR" />
 		<result column="emp_phone" property="empPhone" jdbcType="VARCHAR" />
 		<result column="emp_hiredate" property="empHiredate" jdbcType="DATE" />
 		<result column="emp_salary" property="empSalary" jdbcType="INTEGER" />		
 		<result column="emp_info" property="empInfo" jdbcType="VARCHAR" />
-		
 		<!-- 多对一关联部门 -->
 		<association property="dept" javaType="com.icss.oa.dept.pojo.Dept">
-			<id column="DEPT_ID" property="deptId" jdbcType="INTEGER" />
+			<id column="EMP_DEPT_ID" property="deptId" jdbcType="INTEGER" />
 			<result column="DEPT_NAME" property="deptName" jdbcType="VARCHAR" />
 			<result column="DEPT_LOC" property="deptLoc" jdbcType="VARCHAR" />
 		</association>
 		<!-- 多对一关联职务 -->
 		<association property="job" javaType="com.icss.oa.job.pojo.Job">
-			<id column="JOB_ID" property="jobId" jdbcType="INTEGER" />
+			<id column="EMP_JOB_ID" property="jobId" jdbcType="INTEGER" />
 			<result column="JOB_NAME" property="jobName" jdbcType="VARCHAR" />
 			<result column="JOB_MIN_SAL" property="jobMinSal" jdbcType="INTEGER" />
 			<result column="JOB_MAX_SAL" property="jobMaxSal" jdbcType="INTEGER" />
@@ -48,6 +47,6 @@
 	      #{empHiredate,jdbcType=DATE}, #{empSalary,jdbcType=INTEGER}, #{dept.deptId,jdbcType=INTEGER}, 
 	      #{job.jobId,jdbcType=INTEGER}, #{empInfo,jdbcType=VARCHAR}, #{empPic,jdbcType=LONGVARCHAR}
 	      )
-  </insert>
+  	</insert>
 			
 </mapper>
