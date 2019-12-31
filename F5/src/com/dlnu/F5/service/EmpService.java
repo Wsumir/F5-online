@@ -1,5 +1,8 @@
 package com.dlnu.F5.service;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -7,6 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.dlnu.F5.dao.EmpMapper;
 import com.dlnu.F5.pojo.Emp;
 import com.dlnu.F5.pojo.Expatriate;
+import com.dlnu.F5.util.SendEmail;
+import com.sun.mail.handlers.message_rfc822;
+
+import jdk.nashorn.internal.ir.RuntimeNode.Request;
 
 /**
  * 员工模块相关业务
@@ -41,15 +48,35 @@ public class EmpService {
 		
 	}
 	
+	public Emp queryByName(String empLoginName)
+	{
+		Emp emp = mapper.queryByName(empLoginName);
+		return emp;
+	}
+	
+	
 	public Emp queryById(Integer empId){
 		Emp emp = mapper.queryById(empId);
 		return emp;
 	}
 	
-	
-	
-	
-	
+	public Integer checkEmail(Integer empId) throws AddressException, MessagingException, InterruptedException
+	{
+		Emp emp= mapper.queryById(empId);
+		
+		String email = emp.getEmpEmail();
+		
+		System.out.println(email);
+		
+		int max=1000000,min=100000;
+		int random = (int) (Math.random()*(max-min)+min); 
+		System.out.println(random);
+		
+		String message = "【OA系统】,验证码"+random+"您正在进行邮箱验证，如非本人操作，请忽略本信息";
+		SendEmail.send(email,message);
+		
+		return random;
+	}
 	
 	
 }

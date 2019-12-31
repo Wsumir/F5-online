@@ -21,54 +21,12 @@
 			
 			<ol class="breadcrumb" style="background-color: #545353;  width: 300px;">
 				<li><a href="#">OA系统</a></li>
-				<li><a href="#">外派信息</a></li>
 			</ol>
 			
-			<h2 class="page-header" >外派人员信息</h2>
+			<h2 class="page-header" >个人信息</h2>
 			<br><br>
 			
-				
-			<table class="table table-hover table-bordered">
-				<thead>
-					<tr>
-						<td>外派编号</td>
-						<td>员工编号</td>
-						<td>员工姓名</td>
-						<td>外派公司</td>
-						<td>外派时间</td>
-						<td>外派天数</td>
-						<td>操作</td>
-						
-					</tr>
-				</thead>
-				<tbody>
-					<tr v-for="(expatriate,index) in expatriateList">
-						<td>{{expatriate.expatriateId}}</td>
-						<td>{{expatriate.emp.empId}}</td>
-						<td>{{expatriate.emp.empName}}</td>
-						<td>{{expatriate.expatriateCompany}}</td>
-						<td>{{expatriate.expatriateDate}}</td>
-						<td>{{expatriate.expatriateDays}}</td>
-						<td>
-							
-							<button type="button" class="btn btn-primary btn-xs" @click="toUpdate(expatriate.expatriateId)">
-								<span class="glyphicon glyphicon-pencil"></span>
-								修改
-							</button>
-							<button type="button" class="btn btn-default btn-xs" @click="del(index,expatriate.expatriateId)">
-								<span class="glyphicon glyphicon-trash"></span>
-								删除
-							</button>
-						</td>
-					</tr>					
-				</tbody>
-			</table>
-			
-			<div class="row">
-				<div class="col-sm-offset-8 col-sm-4">
-					<a href="AddExpatriate.html" class="btn btn-default btn-block">增加外派人员</a>
-				</div>
-			</div>
+		
 			
 			
 		</div>

@@ -6,20 +6,19 @@
 		<meta charset="utf-8">
 		<title>Home</title>
 
-	
 		<link rel="stylesheet" href="css/zerogrid.css">
 		<link rel="stylesheet" href="css/style.css">
 		<link rel="stylesheet" href="css/menu.css">
 		<link rel="stylesheet" href="css/owl.carousel.min.css">
 		<link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
-		
+
 	</head>
 
 	<body class="home-page">
 
 		<header class="wrap-body">
-			
-			<header class="main-header">
+
+			<header class="main-header" id="header01">
 				<div class="zerogrid">
 					<div class="row">
 						<div class="col-1-3">
@@ -32,23 +31,23 @@
 							<div id='cssmenu' class="align-right">
 								<ul>
 									<li class="active"><a href='index.html'><span>Home</span></a></li>
-									<li><a href='#'><span>user</span></a></li>
-									<li><a href="#"><span>info</span></a></li>
-									<li class='last'><a><span>pc端</span></a></li>
+									<li>
+										<a href='html/user.html'>
+											<span id="helloSpan">欢迎你 {{empList.empName}}</span>
+										</a>
+									</li>
 								</ul>
 							</div>
-							
-						</div>
-					</div>	
-				</div>
-				
-			</header>
 
+						</div>
+					</div>
+				</div>
+
+			</header>
 
 			<!--//////////////////Container////////////-->
 			<section id="container" class="zerogrid">
 				<div class="wrap-container">
-
 
 					<!-----------------content-box-1-------------------->
 					<section class="content-box box-1">
@@ -56,10 +55,10 @@
 							<!--Start Box-->
 							<div id="owl-travel" class="owl-carousel">
 								<div class="item">
-									<img src="images/15.jpg" height="50%"/>
+									<img src="images/15.jpg" height="50%" />
 								</div>
 								<div class="item">
-									<img src="images/16.jpg" height="50%"/>
+									<img src="images/16.jpg" height="50%" />
 								</div>
 							</div>
 						</div>
@@ -91,7 +90,7 @@
 									</a>
 								</div>
 								<div class="col-3-5 box-item">
-									<a class="box-item-inner" href="single.html">
+									<a class="box-item-inner" href="html/expatriate.html">
 										<div class="box-item-image gradient-3" style="background-image: url('images/3.jpg')"></div>
 										<h3 class="sub-title">03.</h3>
 										<div class="box-item-detail">
@@ -174,7 +173,7 @@
 							</div>
 						</div>
 					</section>
-           </select>
+					</select>
 					<!--////////////////////////////////////Footer-->
 					<footer>
 						<div class="zerogrid">
@@ -191,34 +190,53 @@
 										</div>
 									</div>
 								</div>
-							</div>	
-						</div>	
+							</div>
+						</div>
 					</footer>
 
+				</div>
+				</div>
 
-					</div>
-</div>
-
-					<script src="js/iconfont.js"></script>
-					<script  src="js/jquery.slimscroll.min.js"></script>
-					<script src="js/jquery.min.js"></script>
-					<script src="js/script.js"></script>
-
-					<!-- Owl Carusel JavaScript -->
-					<script src="owlcarousel/owl.carousel.js"></script>
-					<script>
-						$(document).ready(function() {
-							$("#owl-travel").owlCarousel({
-								autoplay: true,
-								autoplayTimeout: 3000,
-								loop: true,
-								items: 1,
-								nav: true,
-								navText: ['<i class="fa fa-chevron-left fa-2x"></i>', '<i class="fa fa-chevron-right fa-2x"></i>'],
-								pagination: false
-							});
+				<!--<script src="js/iconfont.js"></script>
+					<script  src="js/jquery.slimscroll.min.js"></script>-->
+				<script src="js/jquery.min.js"></script>
+				<script src="js/script.js"></script>
+				<script src="owlcarousel/owl.carousel.js"></script>
+				<script src="js/URL.js" type="text/javascript" charset="utf-8"></script>
+				<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
+				<script>
+					$(document).ready(function() {
+						$("#owl-travel").owlCarousel({
+							autoplay: true,
+							autoplayTimeout: 3000,
+							loop: true,
+							items: 1,
+							nav: true,
+							navText: ['<i class="fa fa-chevron-left fa-2x"></i>', '<i class="fa fa-chevron-right fa-2x"></i>'],
+							pagination: false
 						});
-					</script>
+					});
+
+					var vue = new Vue({
+						el: '.align-right',
+						data: {
+							empList: []
+						},
+						methods: {
+							//查询数据
+							query: function() {
+
+								//调用后端功能
+								$.getJSON(baseUrl + '/emp/queryName', function(data) {
+									vue.empList = data;
+								});
+							},
+						},
+						mounted: function() { //网页渲染完毕调用
+							this.query();
+						}
+					});
+				</script>
 
 	</body>
 

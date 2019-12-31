@@ -49,7 +49,15 @@ public class TestServiceExpatriate {
 		service.deleteExpatriate(expatriateId);
 	}
 	
+
+	@Test
+	public void testupdate(){
+		Expatriate expatriate = new Expatriate();
+		expatriate.setExpatriateId(51);
+		expatriate.setExpatriateCompany("ÖÐÈí");
+		service.updateExpatriate(expatriate);
+	}
 	
-	
+
 	
 }

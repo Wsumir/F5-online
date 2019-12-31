@@ -59,5 +59,14 @@
 	<delete id="delete" parameterType="java.lang.Integer">
 		delete from expatriate where expatriate_id=#{expatriateId}
 	</delete>
+	
+	
+	<update id="update" parameterType="com.dlnu.F5.pojo.Expatriate">
+		update expatriate
+		set expatriate_company = #{expatriateCompany,jdbcType=VARCHAR},
+		expatriate_date = #{expatriateDate,jdbcType=VARCHAR},
+		expatriate_days = #{expatriateDays,jdbcType=DATE}
+		where expatriate_id = #{expatriateId,jdbcType=INTEGER}
+	</update>
 
 </mapper>

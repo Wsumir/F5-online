@@ -43,6 +43,8 @@
 		WHERE emp_id=#{empId}
 	</select>
 	
+
+	
 	<insert id="insert" parameterType="com.dlnu.F5.pojo.Emp" >
 	    insert into emp (emp_id, emp_name, emp_login_name, 
 	      emp_pwd, emp_email, emp_phone, 

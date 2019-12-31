@@ -16,7 +16,7 @@ public interface EmpMapper {
 	
 	void insert(Emp emp);
 	
-	
 	Emp queryById(Integer empId);
+	
 
 }

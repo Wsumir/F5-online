@@ -1,6 +1,7 @@
 package com.dlnu.F5.controller;
 
 
+import java.sql.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -50,6 +51,7 @@ public class ExpatriateController {
 		return expatriate;
 	}
 	
+	
 	@ResponseBody
 	@RequestMapping("/expatriate/delete")
 	public void delete(Integer expatriateId,HttpServletRequest request,HttpServletResponse response)
@@ -58,4 +60,19 @@ public class ExpatriateController {
 		System.out.println("/expatriate/delete");
 	}
 	
+	@ResponseBody
+	@RequestMapping("/expatriate/update")
+	public void update(Expatriate expatriate,HttpServletRequest request,HttpServletResponse response)
+	{
+		service.updateExpatriate(expatriate);
+		System.out.println("/expatriate/update");
+	}
+	
+	
+	
 }
+
+
+
+
+

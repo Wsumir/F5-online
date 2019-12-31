@@ -16,4 +16,6 @@ public interface ExpatriateMapper {
 	Expatriate queryById(Integer expatriateId);
 	
 	void delete(Integer expatriateid);
+	
+	void update(Expatriate expatriate);
 }

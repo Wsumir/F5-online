@@ -23,15 +23,15 @@
 				<li><a href="#">OA系统</a></li>
 				<li><a href="#">外派信息</a></li>
 				
-				<li><a href="#">增加外派人员</a></li>
+				<li><a href="#">修改外派人员</a></li>
 			</ol>
 			
 			<h2 class="page-header" >外派人员信息</h2>
 			
 			
-			
-			
 			<form class="form-horizontal" id="from2" method="post">
+				
+				<input type="hidden" placeholder="请输入外派编号" id="expatriateId" name="expatriateId" class="form-control"/>
 				<div class="form-group">
 					<label for="" class="col-sm-2 control-label">人员编号</label>
 					<div class="col-sm-8">
@@ -59,7 +59,7 @@
 				</div>
 				<div class="form-group">					
 					<div class="col-sm-offset-2 col-sm-8">
-						<input id="addBtn" type="button" value="增加" class="btn btn-primary" />
+						<input id="updateBtn" type="button" value="修改" class="btn btn-primary" />
 						<input type="button" value="返回" class="btn btn-warning" onclick="history.back();"/>
 					</div>
 				</div>
@@ -75,10 +75,22 @@
 		<script type="text/javascript" src="../js/URL.js" ></script>
 		<script type="text/javascript" src="../js/layer/layer.js" ></script>
 		<script type="text/javascript" src="../js/vue.js"></script>
+		<script src="../js/param.js" type="text/javascript" charset="utf-8"></script>
 		
 		<script type="text/javascript">
+			var expatriateId = getParam('expatriateId');
 			
+			//调用后端功能，获取部门数据，表单回显
+			$.getJSON(baseUrl + '/expatriate/queryById',{expatriateId:expatriateId},function(data){
+				
+				$('#expatriateId').val(expatriateId);
+				$('#empId').val(data.emp.empId);
+				$('#expatriateCompany').val(data.expatriateCompany);
+				$('#expatriateDate').val(data.expatriateDate);
+				$('#expatriateDays').val(data.expatriateDays);
+			});		
 			
+//			$('#empId').attr("disabled","disabled");
 			$("#checkEmp").hide();
 			
 			//表单验证函数
@@ -140,32 +152,33 @@
 										
 					if (data == 'null' || data == '') {
 						$("#checkEmp").show();
-						$('#addBtn').attr("disabled", true)
+						$('#updateBtn').attr("disabled", true)
 					} else {
 						$("#checkEmp").hide();
-						$('#addBtn').attr("disabled", false)
+						$('#updateBtn').attr("disabled", false)
 					}					
 				});
 				
 			});	
 			
 			
-			
-			
-			$('#addBtn').click(function(){
+		
+			$('#updateBtn').click(function(){
 				if (!checkForm())
 					return;
 				
 				var params = $('#from2').serialize();
 				
-				//调用后端功能
-				$.post(baseUrl+'/expatriate/add',params,function(data){
-					layer.msg('增加成功');
-					setTimeout(function(){
-						
-						location.href = 'expatriate.html';
-					},500);
+//				alert(params);
+				
+//				调用后端功能
+				$.post(baseUrl+'/expatriate/update',params,function(data){
+					layer.msg('修改成功');
 					
+					setTimeout(function(){
+						window.parent.layer.closeAll();
+						window.parent.location.reload();
+					},1000);
 				});
 
 			

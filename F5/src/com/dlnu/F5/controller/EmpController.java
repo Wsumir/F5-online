@@ -37,9 +37,7 @@ public class EmpController {
 		//µÇÂ¼³É¹¦£¬¼ÇÂ¼µÇÂ¼×´Ì¬
 		if(result==3){
 			HttpSession session = request.getSession();
-			session.setAttribute("empLoginName", emp.getEmpLoginName());
-			
-			
+			session.setAttribute("empLoginName", emp.getEmpLoginName());	
 		}
 		
 		return result;
@@ -54,7 +52,33 @@ public class EmpController {
 		return emp;
 	}
 	
+	@ResponseBody
+	@RequestMapping("/emp/queryByName")
+	public Emp queryByName(String empLoginName,HttpServletRequest request,HttpServletResponse response)
+	{
+//		String loginName = (String)request.getSession().getAttribute("empLoginName");
+		
+		Emp emp=service.queryByName(empLoginName);
+		return emp;
+	}
 	
+	@ResponseBody
+	@RequestMapping("/emp/queryName")
+	public Emp queryName(HttpServletRequest request,HttpServletResponse response)
+	{
+		String loginName = (String)request.getSession().getAttribute("empLoginName");
+		
+		Emp emp=service.queryByName(loginName);
+		return emp;
+	}
 	
+	@ResponseBody
+	@RequestMapping("/emp/checkEmail")
+	public String checkEmail(HttpServletRequest request,HttpServletResponse response)
+	{
+		
+		
+		return null;
+	}
 	
 }

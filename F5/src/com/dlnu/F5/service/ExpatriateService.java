@@ -45,7 +45,9 @@ public class ExpatriateService {
 		mapper.delete(expatriateId);
 	}
 	
-	
+	public void updateExpatriate(Expatriate expatriate){
+		mapper.update(expatriate);
+	}
 	
 	
 }
