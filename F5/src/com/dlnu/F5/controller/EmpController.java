@@ -57,7 +57,7 @@ public class EmpController {
 	public Emp queryByName(String empLoginName,HttpServletRequest request,HttpServletResponse response)
 	{
 //		String loginName = (String)request.getSession().getAttribute("empLoginName");
-		
+		System.out.println("/emp/queryByName");
 		Emp emp=service.queryByName(empLoginName);
 		return emp;
 	}
