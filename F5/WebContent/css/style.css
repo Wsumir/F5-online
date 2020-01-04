@@ -79,7 +79,7 @@ hr.line { margin: 15px 0; padding: 0; max-width: 80px;border: 0; border-top: sol
 html, body {width:100%; padding:0; margin:0;}
 body {font: 14px/25px Arial, Helvetica, sans-serif;font-family: 'Raleway', sans-serif;background: #fff;color: #666;font-size: 15px;line-height: 1.6em;letter-spacing: .2px;}
 body .wrap-body{}
-body .wrap-body {background-image: url(../images/bg3.jpg);background-position: center center;background-repeat: no-repeat;background-attachment: fixed;background-size: cover;color:#fff;position: relative;}
+body .wrap-body {background-position: center center;background-repeat: no-repeat;background-attachment: fixed;background-size: cover;color:#fff;position: relative;}
 /* body .wrap-body:before {content:"";display: block;height: 100%;position: absolute;top: 0;left: 0;width: 100%;visibility: visible;background-color: rgba(0, 0, 0, .6);} */
 
 .widget-title{position: relative;letter-spacing: 1px;font-weight: bold;text-transform: uppercase;line-height: 1.38;margin-bottom: 20px;font-size: 15px;color: #eee;padding-left: 13px;}

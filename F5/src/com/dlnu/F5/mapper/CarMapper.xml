@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dlnu.F5.dao.CarMapper">
+
+	<resultMap id="BaseResultMap" type="com.dlnu.F5.pojo.Car">
+		<id column="car_id" property="carId" jdbcType="INTEGER" />
+		<result column="car_name" property="carName" jdbcType="VARCHAR" />
+		<result column="car_board" property="carBoard" jdbcType="VARCHAR" />
+		<result column="car_state" property="carState" jdbcType="VARCHAR" />
+		<result column="car_start" property="carStart" jdbcType="DATE" />
+		<result column="car_end" property="carEnd" jdbcType="DATE" />
+
+		<!-- 多对一关联部门 -->
+		<association property="emp" javaType="com.dlnu.F5.pojo.Emp">
+			<id column="EMP_ID" property="empId" jdbcType="INTEGER" />
+			<result column="emp_name" property="empName" jdbcType="VARCHAR" />
+			<result column="emp_login_name" property="empLoginName"
+				jdbcType="VARCHAR" />
+			<result column="emp_pwd" property="empPwd" jdbcType="VARCHAR" />
+			<result column="emp_email" property="empEmail" jdbcType="VARCHAR" />
+			<result column="emp_phone" property="empPhone" jdbcType="VARCHAR" />
+			<result column="emp_hiredate" property="empHiredate" jdbcType="DATE" />
+			<result column="emp_salary" property="empSalary" jdbcType="INTEGER" />
+			<result column="emp_info" property="empInfo" jdbcType="VARCHAR" />
+		</association>
+	</resultMap>
+
+	<insert id="insert" parameterType="com.dlnu.F5.pojo.Car">
+		insert into car (car_id,
+		car_name, car_board,
+		car_state, car_emp_id,car_start,car_end)
+		values
+		(default,
+		#{carName,jdbcType=VARCHAR},
+		#{carBoard,jdbcType=VARCHAR},
+		#{carState,jdbcType=VARCHAR},
+		#{emp.empId,jdbcType=INTEGER},
+		#{carStart,jdbcType=DATE},
+		#{carEnd,jdbcType=DATE}
+		)
+	</insert>
+	
+
+	<select id="queryByName" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select * from car where car_name=#{carName}
+	</select>
+
+	<select id="queryById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select * from car where car_id=#{carId}
+	</select>
+	
+    <select id="queryByBoard" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select * from car where car_board=#{carBoard}
+	</select>
+
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from car
+		where
+		car_id=#{carId}
+	</delete>
+
+	<update id="update" parameterType="com.dlnu.F5.pojo.Car">
+		update car
+		set 
+		car_state = #{carState,jdbcType=VARCHAR},
+		car_emp_id=#{emp.empId},
+		car_start = #{carStart,jdbcType=DATE},
+		car_end = #{carEnd,jdbcType=DATE}
+		where car_id = #{carId,jdbcType=INTEGER}
+	</update>
+	
+	<update id="update2" parameterType="com.dlnu.F5.pojo.Car">
+		update car
+		set 
+		car_state = #{carState,jdbcType=VARCHAR},
+		car_emp_id=#{emp.empId},
+		car_start = null,
+		car_end = null
+		where car_id = #{carId,jdbcType=INTEGER}
+	</update>
+	
+
+
+	<!-- 获得总记录数 -->
+	<select id="getCount" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM car
+	</select>
+
+	<!-- 分页查询员工 -->
+	<select id="queryByPage" resultMap="BaseResultMap">
+		SELECT c.*,e.*
+		FROM car c
+		LEFT OUTER JOIN emp e ON c.`car_emp_id`=e.`emp_id`
+		LIMIT #{start},#{pageSize}
+	</select>
+
+
+</mapper>

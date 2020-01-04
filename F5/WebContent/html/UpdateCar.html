@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>修改车辆</title>
+		<link rel="stylesheet" href="../js/bootstrap/css/bootstrap.css" />
+        <link rel="stylesheet" href="../css/carpage.css" />
+	</head>
+	<body>
+		<div class="container">			
+			
+			<form class="form-horizontal" id="form1">
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">车辆编号</label>
+					<div class="col-sm-8">
+						<input type="text" placeholder="请输入车辆编号" id="carId" name="carId"    class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">车辆姓名</label>
+					<div class="col-sm-8">
+						<input type="text" placeholder="请输入车辆姓名" id="carName" name="carName" readonly class="form-control"/>
+					</div>
+				</div>	
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">车牌</label>
+					<div class="col-sm-8">
+						<input type="text" placeholder="请输入车牌" id="carBoard" name="carBoard" readonly class="form-control"/>
+					</div>
+				</div>				
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">使用情况</label>
+					<div class="col-sm-8">
+						<input type="text" placeholder="闲置    或    已租" id="carState" name="carState"  class="form-control" onblur="change()"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label" id="dispear1">租借员工编号</label>
+					<div class="col-sm-8">
+						<input type="text" placeholder="请输入租借员工编号" id="empId" name="emp.empId" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label" id="dispear2">租借起始日期</label>
+					<div class="col-sm-8">
+						<input type="text" placeholder="请输入起始日期" id="carStart" name="carStart" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label" id="dispear3">租借结束日期</label>
+					<div class="col-sm-8">
+						<input type="text" placeholder="请输入结束日期" id="carEnd" name="carEnd" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">					
+					<div class="col-sm-offset-2 col-sm-8">
+						<input id="updateBtn" type="button" value="修改车辆信息" class="btn btn-primary" />
+						<input type="button" value="返回" class="btn btn-warning" onclick="history.back();" />
+					</div>
+				</div>				
+			</form>
+			
+			
+			<form class="form-horizontal form2" id="form2">
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">车辆编号</label>
+					<div class="col-sm-8">
+						<input type="text" placeholder="请输入车辆编号" id="carId2" name="carId"    class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">车辆姓名</label>
+					<div class="col-sm-8">
+						<input type="text" placeholder="请输入车辆姓名" id="carName2" name="carName" readonly class="form-control"/>
+					</div>
+				</div>	
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">车牌</label>
+					<div class="col-sm-8">
+						<input type="text" placeholder="请输入车牌" id="carBoard2" name="carBoard" readonly class="form-control"/>
+					</div>
+				</div>				
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">使用情况</label>
+					<div class="col-sm-8">
+						<input type="text" placeholder="闲置    或    已租" id="carState2" name="carState"  class="form-control" onblur="change()"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label" id="dispear1">租借员工编号</label>
+					<div class="col-sm-8">
+						<input type="text" placeholder="请输入租借员工编号" id="empId2" name="emp.empId" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">					
+					<div class="col-sm-offset-2 col-sm-8">
+						<input id="updateBtn" type="button" value="修改车辆信息" class="btn btn-primary" />
+						<input type="button" value="返回" class="btn btn-warning" onclick="history.back();" />
+					</div>
+				</div>				
+			</form>
+			
+		
+		</div>
+		
+		<script type="text/javascript" src="../js/jquery-3.4.1.js" ></script>
+		<script type="text/javascript" src="../js/global.js" ></script>
+		<script type="text/javascript" src="../js/layer/layer.js" ></script>
+		<script type="text/javascript" src="../js/param.js" ></script>		
+		<script>
+			
+			
+			//当状态为闲置  只赋予修改状态
+            function change(){
+				var a = document.getElementById('carState').value;
+			    var b = "闲置";
+			    if (a==b){				
+			    	document.getElementById('empId').value="0";
+	                $("#empId")[0].style.display = 'none';
+                    $("#carStart")[0].style.display = 'none';
+                    $("#carEnd")[0].style.display = 'none';
+                    $("#dispear1")[0].style.display = 'none';
+                    $("#dispear2")[0].style.display = 'none';
+                    $("#dispear3")[0].style.display = 'none';
+			    }
+			}
+
+			
+			//全局ajax设置，请求为同步请求
+//			$.ajaxSetup({
+//				async:false
+//			});
+		
+			//获得车辆id
+			var carId = getParam('carId');
+									
+			
+			//查询车辆数据，进行表单回显
+			$.getJSON(baseUrl + '/car/queryById',{carId:carId},function(data){
+				
+				$('#carId').val(data.carId);
+				$('#carName').val(data.carName);
+				$('#carBoard').val(data.carBoard);
+				$('#carStart').val(data.carStart);
+				$('#empId').val(data.emp.empId);
+				$('#carStart').val(data.carStart);
+				$('#carEnd').val(data.carEnd);
+			});			
+			
+					
+		
+			//表单验证函数
+			function checkForm() {
+				return true;				
+			}
+		
+			//修改车辆
+			$('#updateBtn').click(function(){
+				
+				//调用验证函数
+				if ( !checkForm() )
+					return;				
+				
+				
+				var m = document.getElementById('carState').value;
+			    var n = "闲置";
+
+				if (m == n) {
+                    //将form1的值赋给form2
+					var value1 = document.getElementById("carName").value;
+					document.getElementById("carName2").value = value1;
+					var value2 = document.getElementById("carBoard").value;
+					document.getElementById("carBoard2").value = value2;
+					var value3 = document.getElementById("carState").value;
+					document.getElementById("carState2").value = value3;
+					var value4 = document.getElementById("empId").value;
+					document.getElementById("empId2").value = value4;
+					var value5 = document.getElementById("carId").value;
+					document.getElementById("carId2").value = value5;
+
+					var params2 = $('#form2').serialize();
+					
+					//调用后端功能
+					$.post(baseUrl + '/car/update2', params2, function(data) {
+
+						layer.msg('修改车辆成功');
+
+						setTimeout(function() {
+							window.parent.layer.closeAll();
+							window.parent.location.reload();
+						}, 1000);
+					});
+
+				} else {
+					//请求参数
+					var params = $('#form1').serialize();
+					//调用后端功能
+					$.post(baseUrl + '/car/update', params, function(data) {
+
+						layer.msg('修改车辆成功');
+
+						setTimeout(function() {
+							window.parent.layer.closeAll();
+							window.parent.location.reload();
+						}, 1000);
+					});
+				}
+
+			});
+		
+		</script>
+	</body>
+</html>

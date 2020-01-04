@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dlnu.F5.dao.UserfileMapper">
+
+	<resultMap id="BaseResultMap" type="com.dlnu.F5.pojo.Userfile">
+		<id column="file_id" property="fileId" jdbcType="INTEGER" />
+		<result column="file_name" property="fileName" jdbcType="VARCHAR" />
+		<result column="file_path" property="filePath" jdbcType="VARCHAR" />
+
+		<!-- 多对一关联职员 -->
+		<association property="emp" javaType="com.dlnu.F5.pojo.Emp">
+			<id column="EMP_ID" property="empId" jdbcType="INTEGER" />
+			<result column="emp_name" property="empName" jdbcType="VARCHAR" />
+			<result column="emp_login_name" property="empLoginName"
+				jdbcType="VARCHAR" />
+			<result column="emp_pwd" property="empPwd" jdbcType="VARCHAR" />
+			<result column="emp_email" property="empEmail" jdbcType="VARCHAR" />
+			<result column="emp_phone" property="empPhone" jdbcType="VARCHAR" />
+			<result column="emp_hiredate" property="empHiredate" jdbcType="DATE" />
+			<result column="emp_salary" property="empSalary" jdbcType="INTEGER" />
+			<result column="emp_info" property="empInfo" jdbcType="VARCHAR" />
+		</association>
+
+
+
+
+	</resultMap>
+
+
+	<select id="queryById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		SELECT
+		userfile.`file_id`,userfile.`emp_id`,userfile.`file_name`,userfile.`file_path`,emp.`emp_login_name`
+		FROM userfile,emp WHERE userfile.`emp_id`=emp.`emp_id` AND
+		userfile.`emp_id`=#{empId}
+
+	</select>
+
+	<select id="queryId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		SELECT
+		file_path
+		FROM userfile
+		where
+		file_id=#{fileId}
+
+	</select>
+	
+	<insert id="insert" parameterType="com.dlnu.F5.pojo.Userfile">
+		insert into userfile
+		(file_id,
+		emp_id,
+		file_name,
+		file_path
+		)
+		values (
+		default,
+		#{emp.empId,jdbcType=INTEGER},
+		#{fileName,jdbcType=VARCHAR},
+		#{filePath,jdbcType=VARCHAR}
+		)
+	</insert>
+
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from userfile
+		where
+		file_id=#{fileId}
+	</delete>
+
+
+
+
+</mapper>

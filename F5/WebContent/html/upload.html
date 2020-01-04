@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>expatriate</title>
+		<link rel="stylesheet" href="../js/bootstrap/css/bootstrap.css" />
+		<style type="text/css">
+			a {
+				color: white;
+			}
+			
+			h2 {
+				color: white;
+			}
+		</style>
+
+	</head>
+
+	<body style="background-color: #666;">
+
+		<div class="container">
+
+			<ol class="breadcrumb" style="background-color: #545353;  width: 300px;">
+				<li><a href="../index.html">DLNU-OA系统</a></li>
+				<li><a href="#">云文件</a></li>
+
+			</ol>
+
+			<h2 class="page-header">我的文件</h2>
+			<br /><br /><br />
+			<table class="table table-hover table-bordered">
+				<thead>
+					<tr>
+						<td>文件编号</td>
+						<td>文件名</td>
+						<td>操作</td>
+
+					</tr>
+				</thead>
+
+				<tbody>
+					<tr v-for="(file,index) in fileList">
+						<td>{{file.fileId}}</td>
+						<td>{{file.fileName}}</td>
+						<td>
+
+							<button type="button" class="btn btn-primary btn-xs" @click="download(file.fileId)">
+								<span class="glyphicon glyphicon-pencil"></span>
+								<a :href ="'/F5/file/download?fileId='+file.fileId">下载</a>
+							</button>
+							<button type="button" class="btn btn-default btn-xs" @click="del(index,file.fileId)">
+								<span class="glyphicon glyphicon-trash"></span>
+								删除
+							</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<form action="../upload" method="post" enctype="multipart/form-data">
+
+				<input type="file" name="file" class="btn btn-group-xs btn-default" />
+				<input type="submit" value="提交" class="btn btn-primary btn-group-xs">
+				
+			</form>
+
+			
+			<form action="../upload" class="dropzone">
+				<div class="fallback">
+					<input name="file" type="file" multiple />
+				</div>
+			</form>
+
+
+		</div>
+
+		<script type="text/javascript" src="../js/jquery-3.4.1.js"></script>
+		<script type="text/javascript" src="../js/URL.js"></script>
+		<script type="text/javascript" src="../js/layer/layer.js"></script>
+		<script type="text/javascript" src="../js/vue.js"></script>
+		<script src="../js/dropzone.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			var vue = new Vue({
+				el: '.container',
+				data: {
+					fileList: []
+				},
+				methods: {
+					//查询数据
+					query: function() {
+
+						//调用后端功能
+						$.getJSON(baseUrl + '/file/queryById', function(data) {
+							vue.fileList = data;
+						});
+					},
+					//删除方法
+					del: function(index, fileId) {
+
+						if (!window.confirm('确定要删除该文件吗？')) {
+							return;
+						}
+
+						//调用后端功能
+						$.get(baseUrl + '/file/delete', {
+							fileId: fileId
+						}, function(data) {
+							layer.msg('删除文件成功');
+
+							setTimeout(function() {
+								//location.reload();//重新加载当前网页
+								vue.fileList.splice(index, 1); //前端删除
+							}, 1000);
+						});
+
+					},
+
+					download: function(fileId) {
+						//
+						//						$.get(baseUrl + '/file/download', {
+						//							fileId: fileId
+						//						}, function(data) {
+						//							layer.msg('下载文件成功');
+						//
+						//						});
+						//
+						//						$.ajax({
+						//							url: baseUrl + "/file/download",
+						//							type: 'post',
+						//							async: true,
+						//							data: fileId, //携带查询条件
+						//							success: function() {
+						//								alert("成功")
+						//							}
+						//						});
+
+					}
+
+				},
+				mounted: function() { //网页渲染完毕调用
+					this.query();
+				}
+			});
+		</script>
+
+	</body>
+
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>增加车辆</title>
+		<link rel="stylesheet" href="../js/bootstrap/css/bootstrap.css" />
+		<link rel="stylesheet" href="../css/carpage.css" />
+
+	</head>
+	<body>
+		<div class="container">
+			
+			<ol class="breadcrumb">
+				<li><a href="#">OA系统</a></li>
+				<li><a href="#">车辆管理</a></li>
+				<li>增加车辆</li>
+			</ol>
+			
+			<h2 class="page-header">增加新车辆</h2>
+			
+			<form class="form-horizontal" id="form1">
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">车辆姓名</label>
+					<div class="col-sm-8">
+						<input type="text" placeholder="请输入车辆姓名" id="carName" name="carName" class="form-control"/>
+					</div>
+				</div>	
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">车牌号</label>
+					<div class="col-sm-8">
+						<input type="text" placeholder="请输入车牌号" id="carBoard" name="carBoard" class="form-control" onblur="isVehicleNumber()"/>
+					</div>
+				</div>
+				<div class="form-group" id="yincang">
+					<label for="" class="col-sm-2 control-label">使用情况</label>
+					<div class="col-sm-8">
+						<input type="text" placeholder="请输入使用情况" id="carState" name="carState" class="form-control" value="闲置"/>
+					</div>
+				</div>
+				<div class="form-group" id="yincang1">
+					<label for="" class="col-sm-2 control-label">租借员工编号</label>
+					<div class="col-sm-8">
+						<input type="text"  id="empId" name="emp.empId" class="form-control" value="0"/>
+					</div>
+				</div>
+				
+				
+				<div class="form-group">					
+					<div class="col-sm-offset-2 col-sm-8">
+						<input id="addBtn" type="button" value="增加车辆" class="btn btn-primary" />
+						<input type="button" value="返回" class="btn btn-warning" onclick="history.back();" />
+					</div>
+				</div>				
+			</form>
+		</div>
+		
+		<script type="text/javascript" src="../js/jquery-3.4.1.js" ></script>
+		<script type="text/javascript" src="../js/global.js" ></script>
+		<script type="text/javascript" src="../js/layer/layer.js" ></script>
+
+		<script>	
+		
+		
+		
+		
+		     //检查车牌号是否合法
+			function isVehicleNumber() {
+				var carboard=document.getElementById('carBoard').value;
+				var express = /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领]{1}[A-Z]{1}[-][A-Z0-9]{4}[A-Z0-9挂学警港澳]{1}$/;
+				if(express.test(carboard)){
+				//检查车牌号是否存在
+			    
+					$.post(baseUrl + '/car/queryByBoard',{carBoard:$('#carBoard').val()},function(data){
+						if (data == 'null' || data == '') {
+							layer.msg('车牌号可以使用');
+						} else {
+							layer.msg('车牌号被占用');	
+						  }					
+					});
+				
+				}else{
+					alert('输入车牌号码格式错误');
+				}
+			}
+			
+			
+			
+						
+					
+			
+				
+		
+			//表单验证函数
+			function checkForm() {
+				
+				return true;				
+			}
+		
+			//增加车辆
+			$('#addBtn').click(function(){
+				
+				//调用验证函数
+				if ( !checkForm() )
+					return;				
+				
+				//请求参数
+				var params = $('#form1').serialize();
+				
+				//调用后端功能
+				$.post(baseUrl + '/car/add',params,function(data) {
+					
+					layer.msg('增加车辆成功');
+					
+					setTimeout(function(){
+						
+					},500);
+					
+				});
+				
+			});					
+		</script>
+	</body>
+</html>

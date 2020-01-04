@@ -5,12 +5,9 @@
 
 	<resultMap id="BaseResultMap" type="com.dlnu.F5.pojo.Expatriate">
 		<id column="expatriate_id" property="expatriateId" jdbcType="INTEGER" />
-		<result column="expatriate_company" property="expatriateCompany"
-			jdbcType="VARCHAR" />
-		<result column="expatriate_date" property="expatriateDate"
-			jdbcType="DATE" />
-		<result column="expatriate_days" property="expatriateDays"
-			jdbcType="INTEGER" />
+		<result column="expatriate_company" property="expatriateCompany" jdbcType="VARCHAR" />
+		<result column="expatriate_date" property="expatriateDate" jdbcType="DATE" />
+		<result column="expatriate_days" property="expatriateDays" jdbcType="INTEGER" />
 
 		<!-- 多对一关联职员 -->
 		<association property="emp" javaType="com.dlnu.F5.pojo.Emp">

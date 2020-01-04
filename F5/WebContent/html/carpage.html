@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>汽车管理</title>
+  
+  <style>
+			.pagination {
+				margin: 0!important;
+			}
+	</style>
+
+  <link rel="stylesheet" href="../js/bootstrap/css/bootstrap.css" />
+  <link rel="stylesheet" href="../css/carpage.css" />
+  <link rel="stylesheet" href="../css/vendor/fontawesome-free/css/all.min.css" type="text/css">
+  <link rel="stylesheet" href="../css/googleapis.css" type='text/css'/>
+  <link rel="stylesheet" href="../css/vendor/magnific-popup/magnific-popup.css" >
+  <link rel="stylesheet" href="../css/creative.min.css" >
+
+</head>
+
+<body id="page-top">
+
+  <div class="bg1"   id="bg1">
+  	<nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
+    <div >
+      <a class="navbar-brand js-scroll-trigger" href="../index.html">F5-首页</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" 
+      	data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" 
+      	aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto my-2 my-lg-0">
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#bg1">关于</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#services">服务</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#portfolio">汽车图像</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#contact">联系</a>
+          </li>
+        </ul>
+       </div>
+       </div>
+     </nav>
+     
+     
+     
+     <div class="col-lg-10 align-self-end">
+          <h1 id="title">F5汽车管理中心</h1>
+          <h1 id="title1">在F5，员工可以任意对汽车进行使用!
+          	无论是晴天还是雨天，无论是出差或是郊游，公司永远为你提供最周全的方法！</h1> 
+     </div>
+  </div>
+
+  <!-- ---------------------------------------------------------------------------------------------------------------------------------- -->
+  <!-- ---------------------------------------------------------------------------------------------------------------------------------- -->
+  <!-- ---------------------------------------------------------------------------------------------------------------------------------- -->
+  <!-- ---------------------------------------------------------------------------------------------------------------------------------- -->
+  <!-- ---------------------------------------------------------------------------------------------------------------------------------- -->
+  <!-- Services Section -->
+  <section class="page-section" id="services">
+    <div class="container">
+			<ol class="breadcrumb">
+				<li><a href="#">OA系统</a></li>
+				<li><a href="#">车辆管理</a></li>
+				<li>车辆列表</li>
+			</ol>
+			
+			<h2 class="page-header">车辆列表</h2>
+			
+			<table class="table table-hover table-bordered">
+				<thead>
+					<tr>
+						<td>编号</td>
+						<td>名称</td>
+						<td>车牌</td>
+						<td>使用情况</td>
+						<td>租聘员工编号</td>
+						<td>起始日期</td>
+						<td>结束日期</td>
+						<td>操作</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr v-for="(car,index) in carList">
+						<td>{{car.carId}}</td>
+						<td>{{car.carName}}</td>
+						<td>{{car.carBoard}}</td>
+						<td id="dis0">{{car.carState}}</td>
+						<td id="dis1">{{car.emp.empId}}</td>
+						<td id="dis2">{{car.carStart}}</td>
+						<td id="dis3">{{car.carEnd}}</td>
+						<td>
+							<button type="button" class="btn btn-primary btn-xs" @click="toUpdate(car.carId)">
+								<span class="glyphicon glyphicon-pencil"></span>
+								详情
+							</button>
+							<button type="button" class="btn btn-danger btn-xs" @click="del(index,car.carId)">
+								<span class="glyphicon glyphicon-trash"></span>
+								删除
+							</button>
+						</td>
+					</tr>					
+				</tbody>
+			</table>
+			
+			<div class="row">
+				<div class="col-sm-4">
+					共{{pager.recordCount}}条数据，每页{{pager.pageSize}}条，{{pager.pageNum}}/{{pager.pageCount}}
+				</div>
+				<div class="col-sm-8">
+					<nav>
+						<ul class="pagination pagination-sm  pull-right">
+							<li v-show="pager.pageNum!=1"><a href="javascript:void(0);" @click="query(1)">首页</a></li>
+							<li v-show="pager.pageNum!=1"><a href="javascript:void(0);" @click="query(pager.pageNum-1)">上页</a></li>
+							<li v-show="pager.pageNum!=pager.pageCount"><a href="javascript:void(0);" @click="query(pager.pageNum+1)">下页</a></li>
+							<li v-show="pager.pageNum!=pager.pageCount"><a href="javascript:void(0);" @click="query(pager.pageCount)">末页</a></li>							
+						</ul>
+					</nav>
+				</div>
+			</div>
+			
+			<div class="row" style="margin-top: 20px;">
+				
+				<div class="col-sm-offset-8 col-sm-4">
+					<a href="AddCar.html" class="btn btn-success btn-block">增加车辆</a>
+				</div>
+			</div>
+  </section>
+  <!-- ---------------------------------------------------------------------------------------------------------------------------------- -->
+  <!-- ---------------------------------------------------------------------------------------------------------------------------------- -->
+  <!-- ---------------------------------------------------------------------------------------------------------------------------------- -->
+  <!-- ---------------------------------------------------------------------------------------------------------------------------------- -->
+  <!-- ---------------------------------------------------------------------------------------------------------------------------------- -->
+  <!-- Portfolio Section -->
+  <section id="portfolio">
+    <div class="container-fluid p-0">
+      <div class="row no-gutters">
+        <div class="col-lg-4 col-sm-6">
+          <a class="portfolio-box" href="../images/portfolio/fullsize/1.jpg">
+            <img class="img-fluid" src="../images/portfolio/thumbnails/1.jpg" alt="">
+            <div class="portfolio-box-caption">
+              <div class="project-category text-white-50">
+                                           类别
+              </div>
+              <div class="project-name">
+                                          轿车
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <a class="portfolio-box" href="../images/portfolio/fullsize/2.jpg">
+            <img class="img-fluid" src="../images/portfolio/thumbnails/2.jpg" alt="">
+            <div class="portfolio-box-caption">
+              <div class="project-category text-white-50">
+                                           类别
+              </div>
+              <div class="project-name">
+                                           跑车
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <a class="portfolio-box" href="../images/portfolio/fullsize/3.jpg">
+            <img class="img-fluid" src="../images/portfolio/thumbnails/3.jpg" alt="">
+            <div class="portfolio-box-caption">
+              <div class="project-category text-white-50">
+                                           类别
+              </div>
+              <div class="project-name">
+                SUV
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <a class="portfolio-box" href="../images/portfolio/fullsize/4.jpg">
+            <img class="img-fluid" src="../images/portfolio/thumbnails/4.jpg" alt="">
+            <div class="portfolio-box-caption">
+              <div class="project-category text-white-50">
+                                           类别
+              </div>
+              <div class="project-name">
+                                           越野车
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <a class="portfolio-box" href="../images/portfolio/fullsize/5.jpg">
+            <img class="img-fluid" src="../images/portfolio/thumbnails/5.jpg" alt="">
+            <div class="portfolio-box-caption">
+              <div class="project-category text-white-50">
+                                           类别
+              </div>
+              <div class="project-name">
+                                           房车
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <a class="portfolio-box" href="../images/portfolio/fullsize/6.jpg">
+            <img class="img-fluid" src="../images/portfolio/thumbnails/6.jpg" alt="">
+            <div class="portfolio-box-caption p-3">
+              <div class="project-category text-white-50">
+                                           类别
+              </div>
+              <div class="project-name">
+                                           摩托车
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!--<!-- Call to Action Section -->
+  <section class="page-section bg-dark text-white">
+    <div class="container text-center">
+      
+    </div>
+  </section>-->
+
+  <!-- Contact Section -->
+  <section class="page-section" id="contact">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-8 text-center">
+          <h2 class="mt-0">联系我们!</h2>
+          <hr class="divider my-4">
+          <p class="text-muted mb-5">对于F5的租車服務还有什么宝贵的意见吗？对于每位员工提出的问题我们都会进行采纳和改变!为了更美好的明天努力工作吧！</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-4 ml-auto text-center mb-5 mb-lg-0">
+          <i class="fas fa-phone fa-3x mb-3 text-muted"></i>
+          <div>18888888888</div>
+        </div>
+        <div class="col-lg-4 mr-auto text-center">
+          <i class="fas fa-envelope fa-3x mb-3 text-muted"></i>
+          <!-- Make sure to change the email address in anchor text AND the link below! -->
+          <a class="d-block" href="mailto:contact@yourwebsite.com">xxxxx@xxxxx.com</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <script type="text/javascript" src="../css/vendor/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="../css/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script type="text/javascript" src="../css/vendor/jquery-easing/jquery.easing.min.js"></script>
+  <script type="text/javascript" src="../css/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+  <script type="text/javascript" src="../js/creative.min.js"></script>
+  <script type="text/javascript" src="../js/jquery-3.4.1.js" ></script>
+  <script type="text/javascript" src="../js/global.js" ></script>
+	<script type="text/javascript" src="../js/layer/layer.js" ></script>
+	<script type="text/javascript" src="../js/vue.js" ></script>
+	<script>
+	      
+//	      window.onload = dis;
+//	      function dis(){
+//	      	
+//	      	var a = document.getElementById('dis0').value;
+//			    var b = "闲置";
+//			    if (a==b){			
+//			    	    alert(2222);
+//			    	    document.getElementById('empId').value="  ";
+//	              document.getElementById('carStart').value="  ";
+//				        document.getElementById('carEnd').value="  ";
+//			    	      
+//			    }
+//	      }
+//	
+	
+	    var vue = new Vue({
+				el:'.container',
+				data:{
+					carList:[],
+					pager:{}
+				},
+				methods:{
+					//查询数据
+					query:function(pageNum){
+						
+						//请求参数
+						var params = {
+							pageNum:pageNum,
+							pageSize:10
+						}
+						
+						//调用后端功能
+						$.getJSON(baseUrl + '/car/queryByPage',params,function(data){							
+							vue.carList = data.list;	
+							vue.pager = data.pager;
+						});						
+					},
+					//删除方法
+					del:function(index,carId){
+						
+						if (!window.confirm('确定要删除此车辆吗')) {
+							return;
+						}						
+						
+						//调用后端功能
+						$.get(baseUrl + '/car/delete',{carId:carId},function(data){
+							layer.msg('删除删除成功');	
+							
+							setTimeout(function(){
+								//location.reload();//重新加载当前网页
+								vue.carList.splice(index,1); //前端删除
+							},1000);
+						});
+						
+					},
+					//修改方法
+					toUpdate:function(carId) {
+						layer.open({
+							title:'修改车辆',
+						    type: 2, 				   
+						    area: ['620px', '600px'], //宽高
+						    content: 'UpdateCar.html?carId=' + carId
+						});
+					}
+				},
+				mounted:function(){ //网页渲染完毕调用
+					this.query(1);
+				}
+			});			
+	</script>
+  
+
+</body>
+
+</html>
