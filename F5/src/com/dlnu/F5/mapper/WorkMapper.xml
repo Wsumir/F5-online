@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dlnu.F5.dao.WorkMapper">
+	<resultMap id="BaseResultMap" type="com.dlnu.F5.pojo.Work">
+		<id column="work_id" property="workId" jdbcType="INTEGER" />
+		<result column="work_from_name" property="workFromName" jdbcType="VARCHAR" />
+		<result column="work_to_name" property="workToName" jdbcType="VARCHAR" />
+		<result column="work_title" property="workTitle" jdbcType="VARCHAR" />
+		<result column="work_time_start" property="workTimeStart" jdbcType="TIMESTAMP" />
+		<result column="work_time_end" property="workTimeEnd" jdbcType="TIMESTAMP" />
+		<result column="work_send_time" property="workSendTime" jdbcType="TIMESTAMP" />
+		<result column="work_content" property="workContent" jdbcType="VARCHAR" />
+		<result column="work_act" property="workAct" jdbcType="VARCHAR" />
+   </resultMap>
+	<resultMap id="ResultMapWithBLOBs" type="com.dlnu.F5.pojo.Work" extends="BaseResultMap">
+		<result column="work_content" property="workContent" jdbcType="LONGVARCHAR" />
+	</resultMap>
+
+	<insert id="insert" parameterType="com.dlnu.F5.pojo.Work">
+		insert into work (work_id, work_from_name, work_to_name,
+		work_title, work_time_start, work_time_end, work_send_time,
+		work_content,work_act)
+		values (default, #{workFromName,jdbcType=VARCHAR},
+		#{workToName,jdbcType=VARCHAR},
+		#{workTitle,jdbcType=VARCHAR}, #{workTimeStart,jdbcType=TIMESTAMP},
+		#{workTimeEnd,jdbcType=TIMESTAMP},#{workSendTime,jdbcType=TIMESTAMP},
+		#{workContent,jdbcType=VARCHAR},#{workAct,jdbcType=VARCHAR})
+	</insert>
+
+	<select id="queryByToName" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select *
+		from work
+		where work_to_name = #{workToName}
+	</select>
+	
+	<select id="queryByFromName" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select *
+		from work
+		where work_from_name = #{workFromName}
+	</select>
+
+	<update id="update" parameterType="com.dlnu.F5.pojo.Work">
+		update work
+		set work_from_name = #{workFromName,jdbcType=VARCHAR},
+		work_to_name = #{workToName,jdbcType=VARCHAR},
+		work_title = #{workTitle,jdbcType=VARCHAR},
+		work_time_start = #{workTimeStart,jdbcType=TIMESTAMP},
+		work_time_end = #{workTimeEnd,jdbcType=TIMESTAMP},
+		work_send_time = #{workSendTime,jdbcType=TIMESTAMP},
+		work_content = #{workContent,jdbcType=VARCHAR},
+		work_act = #{workAct,jdbcType=VARCHAR}
+		where work_id = #{workId,jdbcType=INTEGER}
+	</update>
+
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from work
+		where work_id = #{workId,jdbcType=INTEGER}
+	</delete>
+
+	<select id="queryById" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select *
+		from work
+		where work_id = #{workId}
+	</select>
+	
+	<select id="query" resultMap="BaseResultMap">
+		select * from work
+	</select>
+  
+  	<!-- 获得总记录数 -->
+	<select id="getCount" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM work
+	</select>
+
+	<!-- 分页查询工作 -->
+	<select id="queryByPage" resultMap="BaseResultMap">
+		SELECT *
+		FROM work
+		LIMIT #{start},#{pageSize}
+	</select>
+
+</mapper>

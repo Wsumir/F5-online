@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dlnu.F5.dao.JiaMapper">
+
+	<resultMap id="BaseResultMap" type="com.dlnu.F5.pojo.Jia">
+		<id column="jia_id" property="jiaId" jdbcType="INTEGER" />
+		<result column="jia_time" property="jiaTime"
+			jdbcType="DATE" />
+		<result column="jia_info" property="jiaInfo"
+			jdbcType="VARCHAR" />
+
+		<!-- 多对一关联职员 -->
+		<association property="emp" javaType="com.dlnu.F5.pojo.Emp">
+			<id column="emp_id" property="empId" jdbcType="INTEGER" />
+			<result column="emp_name" property="empName" jdbcType="VARCHAR" />
+			<result column="emp_login_name" property="empLoginName"
+				jdbcType="VARCHAR" />
+			<result column="emp_pwd" property="empPwd" jdbcType="VARCHAR" />
+			<result column="emp_email" property="empEmail" jdbcType="VARCHAR" />
+			<result column="emp_phone" property="empPhone" jdbcType="VARCHAR" />
+			<result column="emp_hiredate" property="empHiredate" jdbcType="DATE" />
+			<result column="emp_salary" property="empSalary" jdbcType="INTEGER" />
+			<result column="emp_info" property="empInfo" jdbcType="VARCHAR" />
+		</association>
+
+	</resultMap>
+
+	<!-- 根据名字查询会议 -->
+	<select id="queryByName" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		SELECT j.*,e.*
+		FROM jia j
+		LEFT OUTER JOIN emp e ON
+		j.`jia_emp_id`=e.`emp_id`
+		WHERE
+		e.`emp_login_name`=#{empLoginName}
+	</select>
+	
+	<insert id="insert" parameterType="com.dlnu.F5.pojo.Jia">
+		insert into jia (jia_id,jia_emp_id,
+		jia_time,jia_info		)
+		values (default, #{emp.empId,jdbcType=INTEGER},
+		#{jiaTime,jdbcType=DATE},#{jiaInfo,jdbcType=VARCHAR}
+		)
+	</insert>
+
+
+</mapper>

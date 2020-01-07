@@ -33,17 +33,9 @@
 		<result column="emp_pic" property="empPic" jdbcType="LONGVARCHAR" />
 	</resultMap>
 	
-	<select id="queryByName" resultMap="BaseResultMap" parameterType="java.lang.String">
+	<select id="queryByNameZsh" resultMap="BaseResultMap" parameterType="java.lang.String">
 		select * from emp where emp_login_name=#{empLoginName}
 	</select>
-	
-	<select id="queryById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-		SELECT *
-		FROM emp
-		WHERE emp_id=#{empId}
-	</select>
-	
-
 	
 	<insert id="insert" parameterType="com.dlnu.F5.pojo.Emp" >
 	    insert into emp (emp_id, emp_name, emp_login_name, 
@@ -57,5 +49,98 @@
 	      #{job.jobId,jdbcType=INTEGER}, #{empInfo,jdbcType=VARCHAR}, #{empPic,jdbcType=LONGVARCHAR}
 	      )
   </insert>
-			
+  	
+	<!-- 获得总记录数 -->
+	<select id="getCountZsh" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM emp
+	</select>
+
+	<!-- 分页查询员工 -->
+	<select id="queryByPageZsh" resultMap="BaseResultMap">
+		SELECT *
+		FROM emp e 
+		INNER JOIN dept d ON e.`emp_dept_id`=d.`dept_id`
+		INNER JOIN job j ON e.`emp_job_id`=j.`job_id`
+		LIMIT #{start},#{pageSize}
+	</select>
+	
+	
+	<!--  lyl-->
+	<select id="queryByName" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.String">
+		SELECT e.*,d.*,j.* 
+		FROM emp e 
+		LEFT OUTER JOIN dept d ON e.`emp_dept_id`=d.`dept_id`
+		LEFT OUTER JOIN job j ON e.`emp_job_id`=j.`job_id`
+		where emp_login_name=#{empLoginName}
+	</select>
+	
+	<update id="update" parameterType="com.dlnu.F5.pojo.Emp">
+		update emp 
+		set emp_login_name=#{empLoginName},emp_email=#{empEmail},emp_phone=#{empPhone},
+		emp_info=#{empInfo}
+		where emp_login_name=#{empLoginName}
+	</update>
+
+	<update id="updatePwdByName" parameterType="com.dlnu.F5.pojo.Emp">
+		update emp set
+		emp_pwd=#{empPwd}
+		where emp_login_name=#{empLoginName}
+	</update>
+	
+	<!-- 更新用户头像 -->
+	<update id="updatePic">
+		update emp set emp_pic=#{empPic}
+		where  emp_login_name=#{empLoginName}
+	</update>
+	
+	<!-- 获得总记录数 -->
+	<select id="getCount" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM emp
+	</select>
+	
+	<!-- 分页查询员工 -->
+	<select id="queryByPage" resultMap="BaseResultMap">
+		SELECT e.*,d.*,j.*
+		FROM emp e
+		LEFT OUTER JOIN dept d ON e.`emp_dept_id`=d.`dept_id`
+		LEFT OUTER JOIN job j ON e.`emp_job_id`=j.`job_id`
+		LIMIT #{start},#{pageSize}
+	</select>
+	
+	<!--zgz  -->
+	<!-- 分页查询员工 -->
+	<select id="queryByPagezgz" resultMap="BaseResultMap">
+		SELECT e.*,d.*
+		FROM emp e
+		LEFT OUTER JOIN dept d ON e.`emp_dept_id`=d.`dept_id`
+		LIMIT #{start},#{pageSize}
+	</select>
+	
+	<!-- 根据empid查询员工 -->
+	<select id="queryByIdzgz" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		SELECT e.*,d.*
+		FROM emp e
+		LEFT OUTER JOIN dept d ON e.`emp_dept_id`=d.`dept_id`
+	    where emp_id=#{empId}
+	</select>
+	
+	<!-- 根据deptid查询员工 -->
+	<select id="queryByDeptIdzgz" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		SELECT e.*,d.*
+		FROM emp e
+		LEFT OUTER JOIN dept d ON e.`emp_dept_id`=d.`dept_id`
+	    where emp_dept_id=#{deptId}
+	</select>
+	
+	<!-- 根据jobid查询员工 -->
+	<select id="queryByJobIdzgz" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		SELECT e.*,d.*
+		FROM emp e
+		LEFT OUTER JOIN dept d ON e.`emp_dept_id`=d.`dept_id`
+	    where emp_job_id=#{jobId}
+	</select>		
 </mapper>

@@ -2,8 +2,6 @@ package com.dlnu.F5.pojo;
 
 import java.sql.Date;
 
-import org.quartz.Job;
-
 /**
  * 员工实体类
  * 

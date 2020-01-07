@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>个人中心</title>
+
+		<link rel="stylesheet" href="../js/bootstrap/css/bootstrap.css" />
+		<script type="text/javascript" src="../js/jquery-3.4.1.js"></script>
+		<script type="text/javascript" src="../js/bootstrap/js/bootstrap.js"></script>
+		<script type="text/javascript" src="../js/layer/layer.js"></script>
+		<script type="text/javascript" src="../js/vue.js"></script>
+		<script type="text/javascript" src="../js/URL.js"></script>
+
+		<style type="text/css">
+			body {
+				background-color: #545353;
+				background-size: cover;
+			}
+			
+			#head {
+				width: 1000px;
+				height: 50px;
+				//background: rgba(0, 0, 0, 0.5);
+				margin: auto;
+				background-image: url(../images/bg7.jpg);
+				//background-color: 	#545353;
+				//	position: relative;
+			}
+			
+			.carousel {
+				width: 1000px;
+				height: 400px;
+				margin: auto;
+			}
+			/*img {
+				width: 1200px;
+				height: 400px!important;
+				margin: auto;
+			}*/
+			
+			.carousel-inner {
+				height: 400px;
+				overflow: hidden;
+			}
+			
+			#caidan1 {
+				width: 1000px;
+				text-align: center;
+				color: #F6F6F6;
+				margin: auto;
+			}
+			
+			#caidan2 {
+				width: 1000px;
+				text-align: center;
+			}
+			
+			#zhongxin {
+				background-color: #FFFFFF;
+				width: 1000px;
+				height: 1200px;
+				margin: auto;
+			}
+			
+			/*头像区*/
+			.touxiang {
+				width: 150px;
+				height: 150px;
+				border-radius: 50%;
+				overflow: hidden;
+				margin: 20px auto;
+				border:5px solid #ffffff;
+			}
+			
+			#xiala {
+				width: 300px;
+			}
+			
+			.panel-group {
+				max-height: 770px;
+				overflow: auto;
+			}
+			
+			.leftMenu {
+				margin: 10px;
+				margin-top: 5px;
+			}
+			
+			.leftMenu .panel-heading {
+				font-size: 14px;
+				padding-left: 20px;
+				height: 36px;
+				line-height: 36px;
+				color: white;
+				position: relative;
+				cursor: pointer;
+			}
+			/*转成手形图标*/
+			
+			.leftMenu .panel-heading span {
+				position: absolute;
+				right: 10px;
+				top: 12px;
+			}
+			
+			.leftMenu .menu-item-left {
+				padding: 2px;
+				background: transparent;
+				border: 1px solid transparent;
+				border-radius: 6px;
+			}
+			
+			.leftMenu .menu-item-left:hover {
+				background: #C4E3F3;
+				border: 1px solid #1E90FF;
+			}
+			
+			#picture {
+				text-align: center;
+				width: 100px;
+				height: 100px;
+				background: url(../images/bg3.jpg) no-repeat;
+				background-size: cover;
+				margin: 50px auto;
+				border-radius: 50%;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="app">
+
+			<!--用户名显示开始-->
+			<nav id="head" class="navbar navbar-inverse navbar-fixed-top">
+				<div class="container">
+
+					<!--logoa标志-->
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#myCollapse1">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+						<a href="./cloud_oa/pages/index.jsp" class="navbar-brand">
+							<img src="../images/logo1.png" height="20" />
+						</a>
+					</div>
+					<!--LOGO标志-->
+
+					<!--当前登录用户-->
+					<form if="userform" action="">
+						<div class="collapse navbar-collapse navbar-right" id="myCollapse1">
+							<ul class="nav navbar-nav nav-right">
+								<li class="dropdown">
+									<a href="#" data-toggle="dropdown" style="color: #FFFFFF;">
+							<!--当前用户：<input type="text" :placeholder="emp.empLoginName" readonly/>
+							<span class="caret"></span>-->
+						</a>
+									<ul class="dropdown-menu ">
+										<li>
+											<a href="login.html" id="modalBtn">切换用户</a>
+										</li>
+									</ul>
+								</li>
+
+							</ul>
+
+						</div>
+
+					</form>
+					<!--当前登录用户-->
+
+				</div>
+				<!--/.container-fluid-->
+			</nav>
+			<!--用户名显示结束-->
+
+			<!--轮播图-->
+			<div id="carousel-example-generic" class="carousel slide center-block" data-ride="carousel">
+
+				<!--轮播图格格数-->
+				<ol class="carousel-indicators">
+					<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+					<li data-target="#carousel-example-generic" data-slide-to="1"></li>
+				</ol>
+				<!--轮播图格式-->
+
+				<!--轮播图图片-->
+				<div class="carousel-inner" role="listbox">
+					<div class="item active">
+						<img src="../images/19.jpg">
+						<!--<div class="carousel-caption">
+						图1
+					</div>-->
+					</div>
+					<div class="item">
+						<img src="../images/22.jpg">
+						<!--<div class="carousel-caption">
+						图2
+					</div>-->
+					</div>
+
+				</div>
+				<!--轮播图图片-->
+
+				<!-- 轮播图左右移键 -->
+				<a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+					<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+					<span class="sr-only">Previous</span>
+				</a>
+				<a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+					<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+					<span class="sr-only">Next</span>
+				</a>
+				<!-- 轮播图左右移键 -->
+			</div>
+			<!--轮播图-->
+
+			<!--菜单栏-->
+			<nav class="navbar navbar-default" role="navigation" id="caidan1" style="text-align: center;">
+
+				<div class="container-fluid" id="caidan2">
+					<!--菜单栏头-->
+					<div class="navbar-header" style="width: 70px;">
+						<a class="navbar-brand active" href="../index.html" style="text-align: center; margin: auto;">主页</a>
+					</div>
+					<!--菜单栏头-->
+
+					<div>
+					<ul class="nav navbar-nav">
+						<li style="width: 120px;"><a href="personal_a.html">个人中心</a></li>
+
+						<li style="width: 120px;"><a href="room_query.html">会议室</a></li>
+						<li style="width: 120px;"><a href="Work.html">工作安排</a></li>
+						<li style="width: 120px;"><a href="things.html">资产管理</a></li>
+						<li style="width: 120px;"><a href="expatriate.html">外派信息</a></li>
+						<li style="width: 120px;"><a href="carpage.html">车辆管理</a></li>
+						<li style="width: 120px;"><a href="BusinessCard.html">名片夹</a></li>
+
+					</ul>
+				</div>
+
+
+				</div>
+			</nav>
+			<!--菜单栏-->
+
+			<!--个人中心栏开始-->
+			<div id="zhongxin">
+
+				<div class="row">
+
+					<!--左侧下拉菜单部分-->
+					<div class="col-md-2">
+						<div class="panel-group table-responsive" role="tablist">
+							<!--分组一-->
+							<div class="panel panel-primary leftMenu">
+								<!-- 利用data-target指定要折叠的分组列表 -->
+								<div class="panel-heading" id="collapseListGroupHeading1" data-toggle="collapse" data-target="#collapseListGroup1" role="tab">
+									<h4 class="panel-title">
+                                           主页信息
+                <span class="glyphicon glyphicon-chevron-up right"></span>
+              </h4>
+								</div>
+								<!-- .panel-collapse和.collapse标明折叠元素 .in表示要显示出来 -->
+								<div id="collapseListGroup1" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="collapseListGroupHeading1">
+									<ul class="list-group">
+										<li class="list-group-item">
+											<button class="menu-item-left">
+                  <span class="glyphicon glyphicon-triangle-right"></span><a href="personal_a.html">查看个人信息</a>
+                </button>
+										</li>
+										<li class="list-group-item">
+											<button class="menu-item-left">
+                  <span class="glyphicon glyphicon-triangle-right"></span><a href="personal_update.html">修改个人信息</a>
+                </button>
+										</li>
+										<li class="list-group-item">
+											<button class="menu-item-left">
+                  <span class="glyphicon glyphicon-triangle-right"></span><a href="personal_pwd.html">修改密码</a>
+                </button>
+										</li>
+
+										<li class="list-group-item">
+											<button class="menu-item-left">
+                  <span class="glyphicon glyphicon-triangle-right"></span><a href="personal_head.html">上传头像</a>
+               </button>
+										</li>
+
+										<li class="list-group-item">
+											<button class="menu-item-left">
+                  <span class="glyphicon glyphicon-triangle-right"></span><a href="personal_queryother.html">查询他人信息</a>
+                </button>
+										</li>
+										
+										<li class="list-group-item">
+											<button class="menu-item-left">
+                  <span class="glyphicon glyphicon-triangle-right"></span><a href="personal_queryother.html">查询他人信息</a>
+                </button>
+										</li>
+										<li class="list-group-item">
+											<button class="menu-item-left">
+                  <span class="glyphicon glyphicon-triangle-right"></span><a href="jia_add.html">请假申请</a>
+                </button>
+										</li>
+										<li class="list-group-item">
+											<button class="menu-item-left">
+                  <span class="glyphicon glyphicon-triangle-right"></span><a href="jia_queryByName.html">我的请假记录</a>
+                </button>
+										</li>
+
+
+									</ul>
+								</div>
+							</div>
+							<!--分组一-->
+
+						</div>
+					</div>
+					<!--左侧下拉菜单部分-->
+
+					<!--右侧个人基本信息-->
+					<div class="col-md-10">
+
+						<h2 class="page-header">个人信息</h2>
+
+						<div>
+							<div class="row touxiang">
+								<a target="content">
+									<img id="empPic" src="../images/default.jpg" class="img-responsive">
+								</a>
+							</div>
+						</div>
+
+						<!--信息表-->
+						<table class="table table-striped">
+							<tbody>
+								<tr>
+									<td style="text-align:center" width="40%"><label class="control-label">登录名</label></td>
+									<td>{{emp.empLoginName}}</td>
+								</tr>
+								<tr>
+									<td style="text-align:center"><label class="control-label">姓名</label></td>
+									<td>{{emp.empName}}</td>
+								</tr>
+
+								<tr>
+									<td style="text-align:center"><label class="control-label">部门</label></td>
+									<td>{{emp.dept.deptName}}</td>
+								</tr>
+								<tr>
+									<td style="text-align:center"><label class="control-label">职位</label></td>
+									<td>{{emp.job.jobName}}</td>
+								</tr>
+								<tr>
+									<td style="text-align:center"><label class="control-label">入职日期</label></td>
+									<td>{{emp.empHiredate}}</td>
+								</tr>
+								<tr>
+									<td style="text-align:center"><label class="control-label">邮箱</label></td>
+									<td>{{emp.empEmail}}</td>
+								</tr>
+								<tr>
+									<td style="text-align:center"><label class="control-label">手机号码</label></td>
+									<td>{{emp.empPhone}}</td>
+								</tr>
+
+								<tr>
+									<td style="text-align:center"><label class="control-label">工资</label></td>
+									<td>{{emp.empSalary}}</td>
+								</tr>
+								<tr>
+									<td style="text-align:center"><label class="control-label">介绍</label></td>
+									<td>
+										<textarea class="form-control" cols="50" rows="4" readonly>{{emp.empInfo}}</textarea>
+									</td>
+								</tr>
+						</table>
+						<!--信息表-->
+					</div>
+					<!--右侧个人基本信息-->
+
+				</div>
+
+				<!--切换折叠指示图标-->
+
+				<!--切换折叠指示图标-->
+
+			</div>
+			<!--个人中心栏结束-->
+
+		</div>
+
+		<!--尾部介绍开始-->
+		<footer>
+			<div class="container-fluid footer_style">
+				<div class="col-md-6 col-md-offset-3 text-center">
+					<h4><img src="../images/logo1.png" height="20"/></h4>
+					<p>地址：金石滩</p>
+					<p>DLNU</p>
+				</div>
+			</div>
+		</footer>
+		<!--尾部介绍结束-->
+
+		<script>
+			/*折叠菜单*/
+			$(function() {
+				$(".panel-heading").click(function(e) {
+					/**/
+					$(this).find("span").toggleClass("glyphicon-chevron-down");
+					$(this).find("span").toggleClass("glyphicon-chevron-up");
+				});
+			});
+			/*折叠菜单*/
+			
+			//如果用户有头像数据，显示用户头像
+				$.get(baseUrl + '/emp/queryHead',function(data){
+					
+					if (data == null || data == '')
+						return;
+					
+					$('#empPic').attr('src',data);
+				});
+
+			var vue = new Vue({
+
+				el: '#app',
+				data: {
+					emp: {
+						dept: {
+
+						},
+						job: {
+
+						}
+					}
+				},
+				methods: {
+					//查询数据
+					query: function() {
+
+						//调用后端功能
+						$.getJSON(baseUrl + '/emp/queryByName', function(data) {
+
+							vue.emp = data;
+
+						});
+					},
+
+				},
+				mounted: function() { //网页渲染完毕调用
+					this.query(); //这是 vue 的方法 所以可以用 this，这个时候 vue 还没初始化，所以用 vue 不行
+				}
+
+			});
+		</script>
+
+	</body>
+
+</html>

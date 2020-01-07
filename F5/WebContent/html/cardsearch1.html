@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>员工档案</title>
+  
+  <style>
+			.pagination {
+				margin: 0!important;
+			}
+	</style>
+   <link rel="stylesheet" href="../css/BusinessCard.css" />
+  <link rel="stylesheet" href="../js/bootstrap/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="../js/bootstrap/css/bootstrap.css" />
+  <link rel="stylesheet" href="../css/carpage.css" />
+  <link rel="stylesheet" href="../css/vendor/fontawesome-free/css/all.min.css" type="text/css">
+  <link rel="stylesheet" href="../css/googleapis.css" type='text/css'/>
+  <link rel="stylesheet" href="../css/vendor/magnific-popup/magnific-popup.css" >
+  <link rel="stylesheet" href="../css/creative1.min.css" >
+
+</head>
+
+<body id="page-top">
+
+  <div class="bg1"   id="bg1">
+  	<nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
+    <div >
+      <a class="navbar-brand js-scroll-trigger" href="#page-top">员工档案</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" 
+      	data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" 
+      	aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto my-2 my-lg-0">
+
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#contact">首页</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#contact">联系</a>
+          </li>
+        </ul>
+       </div>
+       </div>
+     </nav>
+     
+    <section class="page-section" id="services">
+    <div class="container">
+			
+	    <div class="row">		
+	    	<button type="button" id="serchbtn2" class="btn btn-success col-md-2"  >按照员工编号查询员工</button>
+	    </div>
+	    <br />
+	    <div class="row form-group">
+		     <input type="text" placeholder="请输入员工编号" id="serch1" name="empId" class="form-control col-md-4" />
+		</div>
+	    <br />
+		<div class="row">		
+	    	<button id="serchbtn6" class="btn btn-warning col-md-2" @click='query()' >查询</button>
+	    </div>
+	    	
+			
+		<div>	
+			
+			<h2 class="page-header">员工列表</h2>
+			<table class="table table-hover table-bordered">
+				<thead>
+					<tr>
+						<td>编号</td>
+						<td>姓名</td>
+						<td>邮箱</td>
+						<td>电话</td>
+						<td>部门编号</td>
+						<td>简介</td>
+          </tr>
+				</thead>
+				<tbody>
+					<tr v-for="(emp,index) in empList">
+						<td>{{emp.empId}}</td>
+						<td>{{emp.empName}}</td>
+						<td>{{emp.empEmail}}</td>
+						<td>{{emp.empPhone}}</td>
+						<td>{{emp.dept.deptId}}</td>
+						<td>{{emp.empInfo}}</td>
+					</tr>					
+				</tbody>
+				<thead>
+					
+			</table>
+			
+
+			
+			<div class="row" style="margin-top: 20px;"></div>
+		</div>	
+   </section>
+     
+     
+  </div>
+
+  
+
+  <!-- Contact Section -->
+  <section class="page-section" id="contact">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-8 text-center">
+          <h2 class="mt-0">联系我们!</h2>
+          <hr class="divider my-4">
+          <p class="text-muted mb-5">对于F5还有什么宝贵的意见吗？对于每位员工提出的问题我们都会进行采纳和改变!为了更美好的明天努力工作吧！</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-4 ml-auto text-center mb-5 mb-lg-0">
+          <i class="fas fa-phone fa-3x mb-3 text-muted"></i>
+          <div>18888888888</div>
+        </div>
+        <div class="col-lg-4 mr-auto text-center">
+          <i class="fas fa-envelope fa-3x mb-3 text-muted"></i>
+          <!-- Make sure to change the email address in anchor text AND the link below! -->
+          <a class="d-block" href="mailto:contact@yourwebsite.com">xxxxx@xxxxx.com</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <script type="text/javascript" src="../css/vendor/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="../css/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script type="text/javascript" src="../css/vendor/jquery-easing/jquery.easing.min.js"></script>
+  <script type="text/javascript" src="../css/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+  <script type="text/javascript" src="../js/creative.min.js"></script>
+  <script type="text/javascript" src="../js/jquery-3.4.1.js" ></script>
+  <script type="text/javascript" src="../js/global.js" ></script>
+  <script type="text/javascript" src="../js/layer/layer.js" ></script>
+  <script type="text/javascript" src="../js/vue.js" ></script>
+	<script>
+
+	      var vue = new Vue({
+              el: '.container',
+							
+							data: {
+								empList:[]
+							},
+							
+							methods:{
+                                        query: function() {
+										var a = $('#serch1').val();
+										if (a==''){
+							            layer.msg('内容不能为空');
+							            return;
+					                      }
+										
+										$.getJSON(baseUrl + '/emp/queryByIdzgz',{empId:a},function(data) {
+						        	    vue.empList = data;
+						        	    
+						        	    if(vue.empList == ''){
+						        	    	layer.msg('无此员工');
+						        	    }
+						        	    
+										});
+							}
+              }
+							
+			  });
+			
+    </script>
+  
+
+</body>
+
+</html>

@@ -1,20 +1,15 @@
 package com.dlnu.F5.service;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.AddressException;
+import java.util.List;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.dlnu.F5.common.Pager;
 import com.dlnu.F5.dao.EmpMapper;
 import com.dlnu.F5.pojo.Emp;
-import com.dlnu.F5.pojo.Expatriate;
-import com.dlnu.F5.util.SendEmail;
-import com.sun.mail.handlers.message_rfc822;
-
-import jdk.nashorn.internal.ir.RuntimeNode.Request;
-
 /**
  * 员工模块相关业务
  * @author Administrator
@@ -37,7 +32,7 @@ public class EmpService {
 	@Transactional(readOnly=true)
 	public int cherkLogin(String empLoginName,String empPwd){
 		
-		Emp emp = mapper.queryByName(empLoginName);
+		Emp emp = mapper.queryByNameZsh(empLoginName);
 		if(emp==null){
 			return 1;
 		}else if(!empPwd.equals(emp.getEmpPwd())){
@@ -48,35 +43,114 @@ public class EmpService {
 		
 	}
 	
-	public Emp queryByName(String empLoginName)
-	{
-		Emp emp = mapper.queryByName(empLoginName);
+	/**
+	 * 根据登录名返回员工数据
+	 */
+	public Emp queryEmpByNameZsh(String empLoginName) {
+		
+		return mapper.queryByNameZsh(empLoginName);
+	}
+	
+	/**
+	 * 获得员工总数
+	 */
+	public int getEmpCountZsh() {
+		
+		return mapper.getCountZsh();
+	}
+	
+	/**
+	 * 分页查询员工
+	 */
+	public List<Emp> queryEmpByPageZsh(Pager pager) {
+		
+		return mapper.queryByPageZsh(pager.getStart(), pager.getPageSize());
+	}
+	
+	
+	/**
+	 * lyl
+	 */
+	
+	@Transactional(readOnly=true)
+	public Emp TestQueryByName(String empLoginName) {
+		Emp emp = mapper.queryByName(empLoginName);		
+		System.out.println(emp);
 		return emp;
 	}
 	
-	
-	public Emp queryById(Integer empId){
-		Emp emp = mapper.queryById(empId);
-		return emp;
+	@Transactional
+	public void UpdatePwdByName(Emp emp){
+		mapper.updatePwdByName(emp);
 	}
 	
-	public Integer checkEmail(Integer empId) throws AddressException, MessagingException, InterruptedException
-	{
-		Emp emp= mapper.queryById(empId);
+	@Transactional
+	/**
+	 * 修改员工
+	 */
+	public void updateEmp(Emp emp) {
+		mapper.update(emp);
+	}
+	
+	/**
+	 * 修改用户头像
+	 */
+	public void updateEmpPic(String empLoginName,String empPic) {
+		mapper.updatePic(empLoginName, empPic);
+	}
+	
+	/**
+	 * 获得员工总数
+	 */
+	public int getEmpCount() {
 		
-		String email = emp.getEmpEmail();
-		
-		System.out.println(email);
-		
-		int max=1000000,min=100000;
-		int random = (int) (Math.random()*(max-min)+min); 
-		System.out.println(random);
-		
-		String message = "【OA系统】,验证码"+random+"您正在进行邮箱验证，如非本人操作，请忽略本信息";
-		SendEmail.send(email,message);
-		
-		return random;
+		return mapper.getCount();
 	}
 	
 	
+	/**
+	 * 分页查询员工
+	 */
+	@Transactional(readOnly=true)
+	public List<Emp> queryEmpByPage(Pager pager) {
+		
+		return mapper.queryByPage(pager.getStart(), pager.getPageSize());
+	}
+	
+	/**
+	 * zgz
+	 */
+	/**
+	 * 分页查询员工
+	 */
+	public List<Emp> queryEmpByPagezgz(Pager pager) {
+		
+		return mapper.queryByPagezgz(pager.getStart(), pager.getPageSize());
+	}
+	
+	/**
+	 * 根据id返回员工数据
+	 */
+	public List<Emp> queryEmpByIdzgz(Integer empId) {
+		
+		return mapper.queryByIdzgz(empId);
+	}
+	
+	/**
+	 * 根据deptid返回员工数据
+	 */
+	public List<Emp> queryEmpByDeptIdzgz(Integer deptId) {
+		
+		return mapper.queryByDeptIdzgz(deptId);
+	}
+	
+	/**
+	 * 根据jobid返回员工数据
+	 */
+	public List<Emp> queryEmpByJobIdzgz(Integer jobId) {
+		
+		return mapper.queryByJobIdzgz(jobId);
+	}
 }
+
+

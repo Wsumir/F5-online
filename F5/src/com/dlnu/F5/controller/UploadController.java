@@ -22,7 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.dlnu.F5.pojo.Emp;
 import com.dlnu.F5.pojo.Userfile;
-import com.dlnu.F5.service.EmpService;
+import com.dlnu.F5.service.EmpService1;
 import com.dlnu.F5.service.UserfileService;
 
 @Controller
@@ -31,7 +31,7 @@ public class UploadController {
 	private UserfileService service;
 
 	@Autowired
-	private EmpService service1;
+	private EmpService1 service1;
 
 	@RequestMapping("/upload")
 	public String regist(@RequestParam MultipartFile file, HttpServletRequest request, HttpServletResponse response) {

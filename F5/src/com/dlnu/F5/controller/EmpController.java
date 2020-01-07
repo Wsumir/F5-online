@@ -1,6 +1,12 @@
 package com.dlnu.F5.controller;
 
 
+import java.util.HashMap;
+
+
+import java.util.List;
+
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -10,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.dlnu.F5.common.Pager;
 import com.dlnu.F5.pojo.Emp;
 import com.dlnu.F5.service.EmpService;
 
@@ -40,42 +47,173 @@ public class EmpController {
 		return result;
 	}
 	
+	/**
+	 * 根据登录名返回员工数据
+	 */
+	@RequestMapping("/emp/queryByNameZsh")
 	@ResponseBody
-	@RequestMapping("/emp/queryById")
-	public Emp queryById(Integer empId,HttpServletRequest request,HttpServletResponse response)
-	{
-		Emp emp=service.queryById(empId);
+	public Emp queryByNameZsh(HttpServletRequest request, HttpServletResponse response) {
+
+		//从session中获取用户名
+		HttpSession session = request.getSession();
+		String empLoginName = (String) session.getAttribute("empLoginName");
 		
-		return emp;
+		return service.queryEmpByNameZsh(empLoginName);
 	}
+	
+	/**
+	 * 分页查询员工
+	 */
+	@RequestMapping("/emp/queryByPageZsh")
+	@ResponseBody
+	public HashMap<String, Object> queryByNameZsh(Integer pageNum,Integer pageSize,HttpServletRequest request, HttpServletResponse response) {
+
+		Pager pager = new Pager(service.getEmpCountZsh(), pageSize, pageNum);		
+		List<Emp> list = service.queryEmpByPageZsh(pager);
+		
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("pager", pager);
+		map.put("list", list);
+		
+		return map;
+	}
+	
+	/**
+	 * lyl
+	 */
 	
 	@ResponseBody
 	@RequestMapping("/emp/queryByName")
-	public Emp queryByName(String empLoginName,HttpServletRequest request,HttpServletResponse response)
-	{
-//		String loginName = (String)request.getSession().getAttribute("empLoginName");
-		System.out.println("/emp/queryByName");
-		Emp emp=service.queryByName(empLoginName);
-		return emp;
+	public Emp queryByName(Emp emp, HttpServletRequest request, HttpServletResponse response) {
+
+		HttpSession session = request.getSession();
+		String empLoginName = (String) session.getAttribute("empLoginName");
+		Emp e = service.TestQueryByName(empLoginName);
+		return e;
 	}
 	
-	@ResponseBody
-	@RequestMapping("/emp/queryName")
-	public Emp queryName(HttpServletRequest request,HttpServletResponse response)
-	{
-		String loginName = (String)request.getSession().getAttribute("empLoginName");
+	@RequestMapping("/emp/updatePwd")
+	public void updatePwd(Emp emp, HttpServletRequest request, HttpServletResponse response) {
 		
-		Emp emp=service.queryByName(loginName);
-		return emp;
+		HttpSession session = request.getSession();
+		String empLoginName=(String) session.getAttribute("empLoginName");
+		
+		emp.setEmpLoginName(empLoginName);
+						
+		service.UpdatePwdByName(emp);
 	}
 	
-	@ResponseBody
-	@RequestMapping("/emp/checkEmail")
-	public String checkEmail(HttpServletRequest request,HttpServletResponse response)
-	{
+	/**
+	 * 修改员工
+	 */
+	@RequestMapping("/emp/update")
+	public void update(Emp emp, HttpServletRequest request, HttpServletResponse response) {
 		
+		HttpSession session = request.getSession();
 		
-		return null;
+        String empLoginName=(String) session.getAttribute("empLoginName");
+		
+		emp.setEmpLoginName(empLoginName);
+		
+		service.updateEmp(emp);
 	}
+	
+	/**
+	 * 修改用户头像
+	 */
+	@RequestMapping("/emp/updatePic")
+	@ResponseBody
+	public void updatePic(String empPic,HttpServletRequest request, HttpServletResponse response) {
+		
+		//从session中取出用户名
+		HttpSession session = request.getSession();
+		String empLoginName = (String) session.getAttribute("empLoginName");
+		
+		service.updateEmpPic(empLoginName, empPic);
+	}
+	
+	
+	
+	/**
+	 * 分页查询员工
+	 */
+	@RequestMapping("/emp/queryByPage")
+	@ResponseBody
+	public HashMap<String, Object> queryByName(Integer pageNum,Integer pageSize,HttpServletRequest request, HttpServletResponse response) {
+
+		Pager pager = new Pager(service.getEmpCount(), pageSize, pageNum);		
+		List<Emp> list = service.queryEmpByPage(pager);
+		
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("pager", pager);
+		map.put("list", list);
+		
+		return map;
+	}
+	
+	/**
+	 * 根据登录名返回员工头像数据
+	 */
+	@RequestMapping("/emp/queryHead")
+	@ResponseBody
+	public String queryByName(HttpServletRequest request, HttpServletResponse response) {
+
+		// 从session中取出用户名
+		HttpSession session = request.getSession();
+		String empLoginName = (String) session.getAttribute("empLoginName");
+
+		return service.TestQueryByName(empLoginName).getEmpPic();
+	}
+	
+	/**
+	 * zgz
+	 */
+	/**
+	 * 分页查询员工
+	 */
+	@RequestMapping("/emp/queryByPagezgz")
+	@ResponseBody
+	public HashMap<String, Object> queryByNamezgz(Integer pageNum,Integer pageSize,HttpServletRequest request, HttpServletResponse response) {
+
+		Pager pager = new Pager(service.getEmpCount(), pageSize, pageNum);		
+		List<Emp> list = service.queryEmpByPagezgz(pager);
+		
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("pager", pager);
+		map.put("list", list);
+		
+		return map;
+	}
+	
+	/**
+	 * 根据id返回员工数据
+	 */
+	@RequestMapping("/emp/queryByIdzgz")
+	@ResponseBody
+	public List<Emp> queryByIdzgz(Integer empId, HttpServletRequest request, HttpServletResponse response) {
+
+		return service.queryEmpByIdzgz(empId);
+	}
+	
+	/**
+	 * 根据deptid返回员工数据
+	 */
+	@RequestMapping("/emp/queryByDeptIdzgz")
+	@ResponseBody
+	public List<Emp> queryByDeptIdzgz(Integer deptId, HttpServletRequest request, HttpServletResponse response) {
+
+		return service.queryEmpByDeptIdzgz(deptId);
+	}
+	
+	/**
+	 * 根据jobid返回员工数据
+	 */
+	@RequestMapping("/emp/queryByJobIdzgz")
+	@ResponseBody
+	public List<Emp> queryByJobIdzgz(Integer jobId, HttpServletRequest request, HttpServletResponse response) {
+
+		return service.queryEmpByJobIdzgz(jobId);
+	}
+	
 	
 }

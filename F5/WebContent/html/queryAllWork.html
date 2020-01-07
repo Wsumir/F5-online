@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>查看详细</title>
+		<link rel="stylesheet" href="../js/bootstrap/css/bootstrap.css" />
+
+	</head>
+
+	<body>
+		<div class="container">
+
+			<form class="form-inline">
+				<div class="form-group ">
+					<label for="" class="col-sm-2 control-label">发送人</label>
+					<div class="col-sm-8">
+						<input type="text"  id="workFromName" name="workFromName" class="form-control" style="width: ;" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">接收人</label>
+					<div class="col-sm-8">
+						<input type="text"   id="workToName" name="workToName" class="form-control" />
+					</div>
+				</div>	
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">工作主题</label>
+					<div class="col-sm-8">
+						<input type="text"   id="workTitle" name="workTitle" class="form-control"/>
+					</div>
+				</div>				
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">工作开始时间</label>
+					<div class="col-sm-8">
+						<input type="text"  id="workTimeStart" name="workTimeStart" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">工作结束时间</label>
+					<div class="col-sm-8">
+						<input type="text"   id="workTimeEnd" name="workTimeEnd" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">发送时间</label>
+					<div class="col-sm-8">
+						<input type="text" id="workSendTime" name="workSendTime" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">工作内容</label>
+					<div class="col-sm-8">
+						<textarea  type="text"  id="workContent" name="workContent" class="form-control"></textarea >
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">工作状态</label>
+					<div class="col-sm-8">
+						<input  type="text"  id="workAct" name="workAct" class="form-control"></textarea >
+					</div>
+				</div>
+				<div class="form-group">					
+					<div class="col-sm-offset-2 col-sm-8">
+						<input type="hidden" name="workId" id="workId" />
+						<!--<input id="updateBtn" type="button" value="修改工作" class="btn btn-primary" />-->
+						<input type="button" value="返回" class="btn btn-warning" onclick="closes()" />
+					</div>
+				</div>		
+			</form>
+		</div>
+		
+		<script type="text/javascript" src="../js/jquery-3.4.1.js" ></script>
+		<script type="text/javascript" src="../js/datetimepicker/jquery.datetimepicker.js" ></script>
+		<script type="text/javascript" src="../js/URL.js" ></script>
+		<script type="text/javascript" src="../js/layer/layer.js" ></script>
+		<script type="text/javascript" src="../js/param.js" ></script>
+		
+		<script>	
+			//获得工作id
+			var workId = getParam('workId');
+			
+			//调用后端功能，获取工作数据，表单回显
+			$.getJSON(baseUrl + '/work/queryById',{workId:workId},function(data){
+				$('#workFromName').val(data.workFromName);
+				$('#workToName').val(data.workToName);
+				$('#workTitle').val(data.workTitle);
+				$('#workTimeStart').val(data.workTimeStart);
+				$('#workTimeEnd').val(data.workTimeEnd);
+				$('#workSendTime').val(data.workSendTime);
+				$('#workContent').val(data.workContent);
+				$('#workAct').val(data.workAct);
+			});
+
+			function closes(){
+				window.parent.layer.closeAll();
+//				window.parent.location.reload();
+			}
+		</script>
+	</body>
+
+</html>

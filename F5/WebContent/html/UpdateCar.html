@@ -127,9 +127,9 @@
 
 			
 			//全局ajax设置，请求为同步请求
-//			$.ajaxSetup({
-//				async:false
-//			});
+			$.ajaxSetup({
+				async:false
+			});
 		
 			//获得车辆id
 			var carId = getParam('carId');
@@ -137,7 +137,7 @@
 			
 			//查询车辆数据，进行表单回显
 			$.getJSON(baseUrl + '/car/queryById',{carId:carId},function(data){
-				
+				 
 				$('#carId').val(data.carId);
 				$('#carName').val(data.carName);
 				$('#carBoard').val(data.carBoard);

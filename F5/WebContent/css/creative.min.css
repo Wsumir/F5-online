@@ -205,7 +205,7 @@ figure {
 	margin: 0 0 1rem
 }
 
-img {
+images {
 	vertical-align: middle;
 	border-style: none
 }
@@ -503,12 +503,12 @@ mark {
 	content: "\2014\00A0"
 }
 
-.img-fluid {
+.images-fluid {
 	max-width: 100%;
 	height: auto
 }
 
-.img-thumbnail {
+.images-thumbnail {
 	padding: .25rem;
 	background-color: #fff;
 	border: 1px solid #dee2e6;
@@ -521,7 +521,7 @@ mark {
 	display: inline-block
 }
 
-.figure-img {
+.figure-images {
 	margin-bottom: .5rem;
 	line-height: 1
 }
@@ -4621,7 +4621,7 @@ input[type=submit].btn-block {
 	margin-left: -.625rem
 }
 
-.card-img-overlay {
+.card-images-overlay {
 	position: absolute;
 	top: 0;
 	right: 0;
@@ -4630,18 +4630,18 @@ input[type=submit].btn-block {
 	padding: 1.25rem
 }
 
-.card-img {
+.card-images {
 	width: 100%;
 	border-radius: calc(.25rem - 1px)
 }
 
-.card-img-top {
+.card-images-top {
 	width: 100%;
 	border-top-left-radius: calc(.25rem - 1px);
 	border-top-right-radius: calc(.25rem - 1px)
 }
 
-.card-img-bottom {
+.card-images-bottom {
 	width: 100%;
 	border-bottom-right-radius: calc(.25rem - 1px);
 	border-bottom-left-radius: calc(.25rem - 1px)
@@ -4698,11 +4698,11 @@ input[type=submit].btn-block {
 		border-bottom-right-radius: 0
 	}
 	.card-group>.card:not(:last-child) .card-header,
-	.card-group>.card:not(:last-child) .card-img-top {
+	.card-group>.card:not(:last-child) .card-images-top {
 		border-top-right-radius: 0
 	}
 	.card-group>.card:not(:last-child) .card-footer,
-	.card-group>.card:not(:last-child) .card-img-bottom {
+	.card-group>.card:not(:last-child) .card-images-bottom {
 		border-bottom-right-radius: 0
 	}
 	.card-group>.card:not(:first-child) {
@@ -4710,11 +4710,11 @@ input[type=submit].btn-block {
 		border-bottom-left-radius: 0
 	}
 	.card-group>.card:not(:first-child) .card-header,
-	.card-group>.card:not(:first-child) .card-img-top {
+	.card-group>.card:not(:first-child) .card-images-top {
 		border-top-left-radius: 0
 	}
 	.card-group>.card:not(:first-child) .card-footer,
-	.card-group>.card:not(:first-child) .card-img-bottom {
+	.card-group>.card:not(:first-child) .card-images-bottom {
 		border-bottom-left-radius: 0
 	}
 }
@@ -9788,7 +9788,7 @@ a.text-dark:hover {
 	thead {
 		display: table-header-group
 	}
-	img,
+	images,
 	tr {
 		page-break-inside: avoid
 	}
@@ -9906,7 +9906,7 @@ hr.light {
 }
 
 #mainNav .navbar-nav .nav-item .nav-link.active {
-	color: #f4623a!important
+	color: #FFF!important
 }
 
 @media (min-width:992px) {
@@ -9915,13 +9915,13 @@ hr.light {
 		background-color: transparent
 	}
 	#mainNav .navbar-brand {
-		color: rgba(255, 255, 255, .7)
+		color: rgba(255, 255, 255, 1)
 	}
 	#mainNav .navbar-brand:hover {
 		color: #fff
 	}
 	#mainNav .navbar-nav .nav-item .nav-link {
-		color: rgba(255, 255, 255, .7);
+		color: rgba(255, 255, 255,1);
 		padding: 0 1rem
 	}
 	#mainNav .navbar-nav .nav-item .nav-link:hover {
@@ -9951,7 +9951,7 @@ hr.light {
 header.masthead {
 	padding-top: 10rem;
 	padding-bottom: calc(10rem - 72px);
-	background: linear-gradient(to bottom, rgba(92, 77, 66, .8) 0, rgba(92, 77, 66, .8) 100%), url(../img/bg.jpg);
+	background: linear-gradient(to bottom, rgba(92, 77, 66, .8) 0, rgba(92, 77, 66, .8) 100%), url(../images/bg.jpg);
 	background-position: center;
 	background-repeat: no-repeat;
 	background-attachment: scroll;

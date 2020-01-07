@@ -5,9 +5,12 @@
 
 	<resultMap id="BaseResultMap" type="com.dlnu.F5.pojo.Expatriate">
 		<id column="expatriate_id" property="expatriateId" jdbcType="INTEGER" />
-		<result column="expatriate_company" property="expatriateCompany" jdbcType="VARCHAR" />
-		<result column="expatriate_date" property="expatriateDate" jdbcType="DATE" />
-		<result column="expatriate_days" property="expatriateDays" jdbcType="INTEGER" />
+		<result column="expatriate_company" property="expatriateCompany"
+			jdbcType="VARCHAR" />
+		<result column="expatriate_date" property="expatriateDate"
+			jdbcType="DATE" />
+		<result column="expatriate_days" property="expatriateDays"
+			jdbcType="INTEGER" />
 
 		<!-- 多对一关联职员 -->
 		<association property="emp" javaType="com.dlnu.F5.pojo.Emp">
@@ -38,6 +41,17 @@
 		WHERE expatriate_id=#{expatriateId}
 	</select>
 
+	<!-- 获得总记录数 -->
+	<select id="getCount" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM expatriate
+	</select>
+	
+	<!-- 分页查询员工 -->
+	<select id="queryByPage" resultMap="BaseResultMap">
+		SELECT ex.*,em.* FROM expatriate ex LEFT OUTER JOIN emp em ON ex.emp_id=em.emp_id
+		LIMIT #{start},#{pageSize}
+	</select>
+
 	<insert id="insert" parameterType="com.dlnu.F5.pojo.Expatriate">
 		insert into expatriate
 		(expatriate_id, emp_id, expatriate_company,
@@ -54,16 +68,23 @@
 	</insert>
 
 	<delete id="delete" parameterType="java.lang.Integer">
-		delete from expatriate where expatriate_id=#{expatriateId}
+		delete from expatriate where
+		expatriate_id=#{expatriateId}
 	</delete>
-	
-	
+
+
 	<update id="update" parameterType="com.dlnu.F5.pojo.Expatriate">
 		update expatriate
-		set expatriate_company = #{expatriateCompany,jdbcType=VARCHAR},
+		set
+		expatriate_company = #{expatriateCompany,jdbcType=VARCHAR},
 		expatriate_date = #{expatriateDate,jdbcType=VARCHAR},
-		expatriate_days = #{expatriateDays,jdbcType=DATE}
-		where expatriate_id = #{expatriateId,jdbcType=INTEGER}
+		expatriate_days =
+		#{expatriateDays,jdbcType=DATE}
+		where expatriate_id =
+		#{expatriateId,jdbcType=INTEGER}
 	</update>
+
+
+
 
 </mapper>

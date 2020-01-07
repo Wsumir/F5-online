@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dlnu.F5.dao.EmpMapper1">
+	
+	<resultMap id="BaseResultMap" type="com.dlnu.F5.pojo.Emp">
+		<id column="emp_id" property="empId" jdbcType="INTEGER" />
+		<result column="emp_name" property="empName" jdbcType="VARCHAR" />
+		<result column="emp_login_name" property="empLoginName" jdbcType="VARCHAR" />
+		<result column="emp_pwd" property="empPwd" jdbcType="VARCHAR" />
+		<result column="emp_email" property="empEmail" jdbcType="VARCHAR" />
+		<result column="emp_phone" property="empPhone" jdbcType="VARCHAR" />
+		<result column="emp_hiredate" property="empHiredate" jdbcType="DATE" />
+		<result column="emp_salary" property="empSalary" jdbcType="INTEGER" />		
+		<result column="emp_info" property="empInfo" jdbcType="VARCHAR" />
+		
+		<!-- 多对一关联部门 -->
+		<association property="dept" javaType="com.dlnu.F5.pojo.Dept">
+			<id column="DEPT_ID" property="deptId" jdbcType="INTEGER" />
+			<result column="DEPT_NAME" property="deptName" jdbcType="VARCHAR" />
+			<result column="DEPT_LOC" property="deptLoc" jdbcType="VARCHAR" />
+		</association>
+		<!-- 多对一关联职务 -->
+		<association property="job" javaType="com.dlnu.F5.pojo.Job">
+			<id column="JOB_ID" property="jobId" jdbcType="INTEGER" />
+			<result column="JOB_NAME" property="jobName" jdbcType="VARCHAR" />
+			<result column="JOB_MIN_SAL" property="jobMinSal" jdbcType="INTEGER" />
+			<result column="JOB_MAX_SAL" property="jobMaxSal" jdbcType="INTEGER" />
+		</association>
+		
+	</resultMap>
+	
+	<resultMap id="ResultMapWithBLOBs" type="com.dlnu.F5.pojo.Emp"
+		extends="BaseResultMap">
+		<result column="emp_pic" property="empPic" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	
+	<select id="queryByName" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select * from emp where emp_login_name=#{empLoginName}
+	</select>
+	
+	<select id="queryById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		SELECT *
+		FROM emp
+		WHERE emp_id=#{empId}
+	</select>
+	
+	<insert id="insert" parameterType="com.dlnu.F5.pojo.Emp" >
+	    insert into emp (emp_id, emp_name, emp_login_name, 
+	      emp_pwd, emp_email, emp_phone, 
+	      emp_hiredate, emp_salary, emp_dept_id, 
+	      emp_job_id, emp_info, emp_pic
+	      )
+	    values (default, #{empName,jdbcType=VARCHAR}, #{empLoginName,jdbcType=VARCHAR}, 
+	      #{empPwd,jdbcType=VARCHAR}, #{empEmail,jdbcType=VARCHAR}, #{empPhone,jdbcType=VARCHAR}, 
+	      #{empHiredate,jdbcType=DATE}, #{empSalary,jdbcType=INTEGER}, #{dept.deptId,jdbcType=INTEGER}, 
+	      #{job.jobId,jdbcType=INTEGER}, #{empInfo,jdbcType=VARCHAR}, #{empPic,jdbcType=LONGVARCHAR}
+	      )
+  </insert>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+			
+</mapper>

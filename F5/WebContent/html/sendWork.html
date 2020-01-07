@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>工作安排</title>
+		<link rel="stylesheet" href="../js/bootstrap/css/bootstrap.css"/>
+		<link rel="stylesheet" href="../js/datetimepicker/jquery.datetimepicker.css" />
+		
+	</head>
+	<body>
+		<div class="container">			
+			
+			<form class="form-horizontal" id="form1">
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">发送人</label>
+					<div class="col-sm-8">
+						<input type="text" readonly  id="workFromName" name="workFromName" class="form-control" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">接收人</label>
+					<div class="col-sm-8">
+						<input type="text" readonly id="workToName" name="workToName" class="form-control" />
+					</div>
+				</div>	
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">工作主题</label>
+					<div class="col-sm-8">
+						<input type="text" placeholder="请输入工作主题" id="workTitle" name="workTitle" class="form-control"/>
+					</div>
+				</div>				
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">工作开始时间</label>
+					<div class="col-sm-8">
+						<input type="text"  placeholder="请输入工作开始时间" id="workTimeStart" name="workTimeStart" class="form-control" autocomplete="off"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">工作结束时间</label>
+					<div class="col-sm-8">
+						<input type="text"  placeholder="请输入工作结束时间" id="workTimeEnd" name="workTimeEnd" class="form-control" autocomplete="off"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">发送时间</label>
+					<div class="col-sm-8">
+						<input type="text" readonly  id="workSendTime" name="workSendTime" class="form-control" autocomplete="off"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">工作内容</label>
+					<div class="col-sm-8">
+						<textarea  type="text" placeholder="请输入工作内容" id="workContent" name="workContent" class="form-control"></textarea >
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">工作状态</label>
+					<div class="col-sm-8">
+						<input type="text" id="workAct" name="workAct" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">					
+					<div class="col-sm-offset-2 col-sm-8">
+						<input type="hidden" name="workId" id="workId" />
+						<input id="sendBtn" type="button" value="安排工作" class="btn btn-primary" />
+						<input type="button" value="返回" class="btn btn-warning" onclick="closes();" />
+					</div>
+				</div>					
+			</form>
+		</div>
+		
+		<script type="text/javascript" src="../js/jquery-3.4.1.js" ></script>
+		<script type="text/javascript" src="../js/bootstrap/js/bootstrap.js" ></script>
+		<script type="text/javascript" src="../js/layer/layer.js" ></script>
+		<script type="text/javascript" src="../js/URL.js" ></script>
+		<script type="text/javascript" src="../js/vue.js" ></script>
+		<script type="text/javascript" src="../js/param.js" ></script>
+		<script type="text/javascript" src="../js/datetimepicker/jquery.datetimepicker.js" ></script>
+		
+		<script>
+		
+			// 给文本框绑定日历控件
+			$('#workTimeStart').datetimepicker({
+				lang:'ch',
+				format:'Y-m-d h:i:s',
+				formatDate:'Y-m-d h:i:s',		
+				todayBtn : true,	
+			});
+			
+			// 给文本框绑定日历控件
+			$('#workTimeEnd').datetimepicker({
+				lang:'ch',
+				format:'Y-m-d h:i:s',
+				formatDate:'Y-m-d h:i:s',
+				todayBtn : true,
+			});
+			
+			//获取接收人名字，表单回显
+			var name = getParam('empName');
+			name = decodeURI(name);//解决中文乱码
+			$('#workToName').val(name);
+			
+			//获取登录员工名字
+			var empName;
+			$.ajaxSettings.async = false;//把ajax设置为同步
+			$.post(baseUrl+'/emp/queryByNameZsh',function(data1){
+				empName = data1.empName;
+			});
+			$.ajaxSettings.async = true;//再把ajax设置回异步
+
+			//调用后端功能,获取发送人数据，表单回显
+			$.getJSON(baseUrl + '/work/queryByToName',{workToName:empName}, function(data) {
+				$('#workFromName').val(data[0].workToName);
+			});
+			
+			//获取当前时间
+			 function getNowFormatDate() {
+    			var date = new Date();
+    			var seperator1 = "-";
+    			var seperator2 = ":";
+    			var month = date.getMonth() + 1;
+    			var strDate = date.getDate();
+    			if (month >= 1 && month <= 9) {
+        			month = "0" + month;
+    			}
+    			if (strDate >= 0 && strDate <= 9) {
+        			strDate = "0" + strDate;
+   		 		}
+   				 var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+           		 + " " + date.getHours() + seperator2 + date.getMinutes()+ seperator2 + date.getSeconds();
+    			
+    			return currentdate;
+			}
+			
+			//当前时间回显
+			$('#workSendTime').val(getNowFormatDate());
+			
+			//表单验证函数
+			function checkForm() {
+				//工作开始时间
+				var workTimeStart= $('#workTimeStart');
+				
+				if (workTimeStart.val() == '' ) {
+					layer.msg('工作开始时间不能为空');
+					workTimeStart.select();
+					return false;
+				}
+				
+				//工作结束时间
+				var workTimeEnd= $('#workTimeEnd');
+				
+				if (workTimeEnd.val() == '' ) {
+					layer.msg('工作开始时间不能为空');
+					workTimeEnd.select();
+					return false;
+				}
+				
+				//工作主题时间
+				var workTitle= $('#workTitle');
+				
+				if (workTitle.val() == '' ) {
+					layer.msg('工作开始时间不能为空');
+					workTitle.select();
+					return false;
+				}
+				
+				//工作内容
+				var workContent = $('#workContent');
+				
+				if (workContent.val() == '' ) {
+					layer.msg('工作内容不能为空');
+					workContent.select();
+					return false;
+				}
+				
+				//工作状态
+				var workAct = $('#workAct');
+				
+				if (workAct.val() == '' ) {
+					layer.msg('工作内容不能为空');
+					workAct.select();
+					return false;
+				}
+				return true;				
+			}
+		
+			//安排工作
+			$('#sendBtn').click(function(){			
+				//调用验证函数
+				if ( !checkForm() )
+					return;				
+				
+				//请求参数
+				var params = {
+					workFromName:$('#workFromName').val(),
+					workToName:$('#workToName').val(),
+					workTitle:$('#workTitle').val(),
+					workTimeStart:$('#workTimeStart').val(),
+					workTimeEnd:$('#workTimeEnd').val(),
+					workSendTime:$('#workSendTime').val(),
+					workContent:$('#workContent').val(),
+					workAct:$('#workAct').val()
+				}
+				
+				console.log(params);
+				//调用后端功能
+				$.post(baseUrl + '/work/add', params,function(data){
+					
+					layer.msg('安排工作成功');
+					
+					setTimeout(function(){
+						window.parent.layer.closeAll();
+						window.parent.location.reload();
+					},500);
+					
+				});
+				
+			});	
+			
+			
+			function closes(){
+				window.parent.layer.closeAll();
+//				window.parent.location.reload();
+			}
+		</script>
+	</body>
+</html>

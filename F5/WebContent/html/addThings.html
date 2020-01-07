@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>增加资产</title>
+		<link rel="stylesheet" type="text/css" href="../js/bootstrap/css/bootstrap.css"/>
+		<link rel="stylesheet" type="text/css" href="../js/datetimepicker/jquery.datetimepicker.css"/>
+	</head>
+	<body>
+		<div class="container">			
+			
+			<form class="form-horizontal" id="form1">
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">资产名字</label>
+					<div class="col-sm-8">
+						<input type="text"  placeholder="请输入资产名字" id="thingsName" name="thingsName" class="form-control"/>
+					</div>
+				</div>	
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">资产类型</label>
+					<div class="col-sm-8">
+						<input type="text"  placeholder="请输入资产类型" id="thingsType" name="thingsType" class="form-control"/>
+					</div>
+				</div>	
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">资产规格</label>
+					<div class="col-sm-8">
+						<input type="text"  placeholder="请输入资产规格" id="thingsSpec" name="thingsSpec" class="form-control"/>
+					</div>
+				</div>				
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">资产单价</label>
+					<div class="col-sm-8">
+						<input type="text"  placeholder="请输入资产单价" id="thingsMoney" name="thingsMoney" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">资产数量</label>
+					<div class="col-sm-8">
+						<input type="text"  placeholder="请输入资产数量" id="thingsNumber" name="thingsNumber" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">					
+					<div class="col-sm-offset-2 col-sm-8">
+						<input id="addBtn" type="button" value="增加资产" class="btn btn-primary" />
+						 <button class="layui-btn" onclick="formClose();">关闭</button>
+					</div>
+				</div>	
+
+			</form>
+		</div>
+		
+		<script type="text/javascript" src="../js/jquery-3.4.1.js" ></script>
+		<script type="text/javascript" src="../js/layer/layer.js" ></script>
+		<script type="text/javascript" src="../js/URL.js" ></script>
+		<script type="text/javascript" src="../js/param.js" ></script>
+		
+		<script>
+			//表单验证函数
+			function checkForm() {
+				
+				//资产名字
+				var thingsName = $('#thingsName');
+				
+				if (thingsName.val() == '' ) {
+					layer.msg('资产名字不能为空');
+					thingsName.select();
+					return false;
+				}
+				
+				//资产类型
+				var thingsType = $('#thingsType');
+				
+				if (thingsType.val() == '' ) {
+					layer.msg('资产类型不能为空');
+					thingsType.select();
+					return false;
+				}
+				
+				//资产规格
+				var thingsSpec = $('#thingsSpec');
+				
+				if (thingsSpec.val() == '' ) {
+					layer.msg('资产规格不能为空');
+					thingsSpec.select();
+					return false;
+				}
+				
+				//资产单价
+				var thingsMoney = $('#thingsMoney');
+				
+				if (thingsMoney.val() == '' ) {
+					layer.msg('资产单价不能为空');
+					thingsMoney.select();
+					return false;
+				}
+				
+				//资产数量
+				var thingsNumber = $('#thingsNumber');
+				
+				if (thingsNumber.val() == '' ) {
+					layer.msg('资产数量不能为空');
+					thingsNumber.select();
+					return false;
+				}
+				return true;				
+			}
+		
+			//增加资产
+			$("#addBtn").click(function(){
+				
+				//调用验证函数
+				if ( !checkForm() )
+					return;				
+				
+				//请求参数
+				var params = $('#form1').serialize();
+				
+				//调用后端功能
+				$.post(baseUrl + '/things/add',params,function(data) {
+					
+					layer.msg('增加资产成功');
+
+					setTimeout(function(){
+						window.parent.layer.closeAll();
+						window.parent.location.reload();
+					},500);
+					
+				});
+				
+			});	
+			
+			function closes(){
+				window.parent.layer.closeAll();
+//				window.parent.location.reload();
+			}
+		</script>
+		
+	</body>
+</html>

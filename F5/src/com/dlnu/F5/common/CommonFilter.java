@@ -31,33 +31,33 @@ public class CommonFilter implements Filter {
 		//设置响应报头，允许其他域请求当前域
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		
-		/*		//***********登录验证拦截************
-		
-		//获得当前web应用名称
-		String context = request.getContextPath();
-				
-		//获得用户当前请求的URI
-		String uri = request.getRequestURI();
-		System.out.println(uri);
-		
-		//判断是否需要登录
-		if (!uri.equals(context + "/login.html")
-				&& !uri.equals(context + "/emp/login")
-				&& !uri.startsWith(context + "/js")
-				&& !uri.startsWith(context + "/css")
-				&& !uri.startsWith(context + "/images")) {
-			
-			//判断session中的用户名是否存在
-			HttpSession session = request.getSession();
-			String empLoginName = (String) session.getAttribute("empLoginName");
-			
-			//如果未登录，重定向到登陆界面
-			if (empLoginName == null) {
-				response.sendRedirect(context + "/login.html");
-				return;
-			}
-		} */
-					
+//		//***********登录验证拦截************
+//		
+//		//获得当前web应用名称
+//		String context = request.getContextPath();
+//				
+//		//获得用户当前请求的URI
+//		String uri = request.getRequestURI();
+//		System.out.println(uri);
+//		
+//		//判断是否需要登录
+//		if (!uri.equals(context + "/html/login.html")
+//				&& !uri.equals(context + "/emp/login")
+//				&& !uri.startsWith(context + "/js")
+//				&& !uri.startsWith(context + "/css")
+//				&& !uri.startsWith(context + "/images")) {
+//			
+//			//判断session中的用户名是否存在
+//			HttpSession session = request.getSession();
+//			String empLoginName = (String) session.getAttribute("empLoginName");
+//			
+//			//如果未登录，重定向到登陆界面
+//			if (empLoginName == null) {
+//				response.sendRedirect(context + "/html/login.html");
+//				return;
+//			}
+//		}
+//		
 		//继续执行请求
 		chain.doFilter(request, response);
 	}

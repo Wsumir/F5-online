@@ -147,7 +147,7 @@
 			//检查员工是否存在
 			$('#empId').change(function(){
 				
-				$.post(baseUrl + '/emp/queryById',{empId:$('#empId').val()},function(data){
+				$.post(baseUrl + '/emp1/queryById',{empId:$('#empId').val()},function(data){
 				
 										
 					if (data == 'null' || data == '') {

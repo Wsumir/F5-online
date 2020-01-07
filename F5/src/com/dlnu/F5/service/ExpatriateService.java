@@ -6,11 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.dlnu.F5.common.Pager;
 import com.dlnu.F5.dao.ExpatriateMapper;
 import com.dlnu.F5.pojo.Expatriate;
-import com.sun.jndi.cosnaming.ExceptionMapper;
-
-import oracle.net.aso.e;
 
 /**
  * 外派模块相关业务
@@ -29,6 +27,19 @@ public class ExpatriateService {
 	@Transactional(readOnly=true)
 	public List<Expatriate> query(){
 		return mapper.query();
+	}
+	
+	/**
+	 * 分页查询外派信息
+	 */
+	public List<Expatriate> queryExpatriateByPage(Pager pager) {
+		
+		return mapper.queryByPage(pager.getStart(), pager.getPageSize());
+	}
+	
+	public int getExpatriateCount() {
+		
+		return mapper.getCount();
 	}
 	
 	public void AddExpatriate(Expatriate expatriate)

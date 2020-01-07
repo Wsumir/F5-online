@@ -1,5 +1,4 @@
 package com.dlnu.F5;
-
 import java.sql.Date;
 import java.util.List;
 
@@ -7,6 +6,7 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.dlnu.F5.common.Pager;
 import com.dlnu.F5.pojo.Emp;
 import com.dlnu.F5.pojo.Expatriate;
 import com.dlnu.F5.service.ExpatriateService;
@@ -26,6 +26,17 @@ public class TestServiceExpatriate {
 	}
 	
 	@Test
+	public void testQueryByPage() {
+		
+		Pager pager = new Pager(service.getExpatriateCount(), 10, 0);
+		List<Expatriate> list = service.queryExpatriateByPage(pager);
+		
+		for (Expatriate expatriate :list) {
+			System.out.println(expatriate);
+		}
+	}
+	
+	@Test
 	public void testAddExpatriate(){
 		
 		Emp emp = new Emp();
@@ -39,7 +50,7 @@ public class TestServiceExpatriate {
 	@Test
 	public void queryById(){
 		
-		Expatriate expatriate=service.queryById(2);
+		Expatriate expatriate=service.queryById(12);
 		System.err.println(expatriate);
 	}
 	

@@ -1,6 +1,7 @@
 package com.dlnu.F5.controller;
 
-
+import com.dlnu.F5.common.Pager;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.dlnu.F5.pojo.Emp;
 import com.dlnu.F5.pojo.Expatriate;
 import com.dlnu.F5.service.ExpatriateService;
 
@@ -67,6 +69,22 @@ public class ExpatriateController {
 		System.out.println("/expatriate/update");
 	}
 	
+	/**
+	 * 分页查询员工
+	 */
+	@RequestMapping("/expatriate/queryByPage")
+	@ResponseBody
+	public HashMap<String, Object> queryByName(Integer pageNum,Integer pageSize,HttpServletRequest request, HttpServletResponse response) {
+
+		Pager pager = new Pager(service.getExpatriateCount(), pageSize, pageNum);		
+		List<Expatriate> list = service.queryExpatriateByPage(pager);
+		
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("pager", pager);
+		map.put("list", list);
+		
+		return map;
+	}
 	
 	
 }

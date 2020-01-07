@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>已用数量</title>
+		<link rel="stylesheet" href="../js/bootstrap/css/bootstrap.css" />
+	</head>
+	<body>
+		<div class="container">			
+			
+			<form class="form-horizontal" id="form1">
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">资产名字</label>
+					<div class="col-sm-8">
+						<input type="text" readonly :value="things.thingsName" id="thingsName" name="thingsName" class="form-control" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">资产类型</label>
+					<div class="col-sm-8">
+						<input type="text" readonly :value="things.thingsType" id="thingsType" name="thingsType" class="form-control" />
+					</div>
+				</div>	
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">资产数量</label>
+					<div class="col-sm-8">
+						<input type="text"  :value="things.thingsNumber" id="thingsNumber" name="thingsNumber" class="form-control" />
+					</div>
+				</div>	
+				
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">资产已用数量</label>
+					<div class="col-sm-8">
+						<input type="text"  :value="things.thingsUse" id="thingsUse" name="thingsUse" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">资产归还数量</label>
+					<div class="col-sm-8">
+						<input type="text" :value="things.thingsBack" id="thingsBack" class="form-control"/>
+					</div>
+				</div>
+				
+				<div class="form-group">					
+					<div class="col-sm-offset-2 col-sm-8">
+						<input type="hidden" name="thingsId" id="thingsId" />
+						<input id="updateBtn" type="button" value="资产数量修改" class="btn btn-primary" @click="update()"/>
+						<input type="button" value="返回" class="btn btn-warning" @click="closes()" />
+					</div>
+				</div>					
+			</form>
+		</div>
+		
+		<script type="text/javascript" src="../js/jquery-3.4.1.js" ></script>
+		<script type="text/javascript" src="../js/URL.js" ></script>
+		<script type="text/javascript" src="../js/layer/layer.js" ></script>
+		<script type="text/javascript" src="../js/param.js" ></script>
+		<script type="text/javascript" src="../js/vue.js" ></script>
+		
+		<script>
+			
+			var vue = new Vue({
+				el:'#form1',
+				data: {
+					things:{}
+				},
+				methods:{
+					
+					query:function(){
+						//获得工作id
+						var thingsId = getParam('thingsId');
+			
+						//调用后端功能，获取工作数据，表单回显
+						$.getJSON(baseUrl + '/things/queryById',{thingsId:thingsId},function(data){
+							console.log(data);
+							$('#thingsName').val(data.thingsName);
+							$('#thingsType').val(data.thingsType);
+							$('#thingsNumber').val(data.thingsNumber);
+							$('#thingsUse').val(data.thingsUse);
+							$('#thingsBack').val(0);
+						});	
+					},
+					update:function(){
+						//表单验证函数
+						function checkForm() {
+				
+							//资产已用数量
+							var thingsUse= $('#thingsUse');
+				
+							if (thingsUse .val()== '') {
+								layer.msg('资产已用数量不能为空');
+								thingsUse.select();
+								return false;
+							}
+							return true;				
+						}	
+						//调用验证函数
+						if ( !checkForm() )
+							return;
+							
+						//请求参数
+						var params={
+							thingsId:getParam('thingsId'),
+							thingsNumber:parseInt($('#thingsNumber').val())+parseInt($('#thingsBack').val())-parseInt($('#thingsUse').val()),
+							thingsUse:parseInt($('#thingsUse').val())-parseInt($('#thingsBack').val())
+						}
+				
+						console.log(params);
+				
+						//调用后端功能
+						$.post(baseUrl + '/things/updateNumber',params,function(data) {
+					
+							layer.msg('修改资产数量成功');
+					
+							setTimeout(function(){
+								window.parent.layer.closeAll();
+								window.parent.location.reload();
+							},500);				
+						});	
+						
+						
+					},
+					closes:function(){
+						window.parent.layer.closeAll();
+//						window.parent.location.reload();
+					}
+					
+				},
+				mounted: function() {
+					this.query();
+				}
+			});
+
+		</script>
+	</body>
+</html>

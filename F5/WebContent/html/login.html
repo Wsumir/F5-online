@@ -13,7 +13,7 @@
 		<br>
 		<br>
 		<br>
-		<h1 style="color: white;font-size: 50px;">F5 WE ARE FGPSAD</h1>
+		<h1 style="color: white;font-size: 50px;font-family;">OA_DLNU</h1>
 		<div class="wrapper">
 
 			<ul class="bg-bubbles">
@@ -54,7 +54,7 @@
 					empPwd: $('#empPwd').val()
 				}
 				//调用后端功能
-				$.post(baseUrl+'/emp/login', params, function(data) {
+				$.post(baseUrl+'/emp1/login', params, function(data) {
 					if (data == 1) {
 						alert("用户名无效");
 					} else if (data == 2) {
@@ -69,6 +69,13 @@
 
 			});
 		</script>
+
+
+
+
+
+
+
 
 	</body>
 

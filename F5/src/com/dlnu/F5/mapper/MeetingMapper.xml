@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dlnu.F5.dao.MeetingMapper">
+
+	<resultMap id="BaseResultMap" type="com.dlnu.F5.pojo.Meeting">
+		<id column="meeting_id" property="meetingId" jdbcType="INTEGER" />
+		<result column="meeting_content" property="meetingContent"
+			jdbcType="VARCHAR" />
+		<result column="meeting_start" property="meetingStart"
+			jdbcType="TIMESTAMP" />
+		<result column="meeting_end" property="meetingEnd" jdbcType="TIMESTAMP" />
+
+		<!-- 多对一关联职员 -->
+		<association property="emp" javaType="com.dlnu.F5.pojo.Emp">
+			<id column="emp_id" property="empId" jdbcType="INTEGER" />
+			<result column="emp_name" property="empName" jdbcType="VARCHAR" />
+			<result column="emp_login_name" property="empLoginName"
+				jdbcType="VARCHAR" />
+			<result column="emp_pwd" property="empPwd" jdbcType="VARCHAR" />
+			<result column="emp_email" property="empEmail" jdbcType="VARCHAR" />
+			<result column="emp_phone" property="empPhone" jdbcType="VARCHAR" />
+			<result column="emp_hiredate" property="empHiredate" jdbcType="DATE" />
+			<result column="emp_salary" property="empSalary" jdbcType="INTEGER" />
+			<result column="emp_info" property="empInfo" jdbcType="VARCHAR" />
+		</association>
+
+		<!-- 多对一关联房间 -->
+		<association property="room" javaType="com.dlnu.F5.pojo.Room">
+			<id column="room_id" property="roomId" jdbcType="INTEGER" />
+			<result column="room_name" property="roomName" jdbcType="VARCHAR" />
+			<result column="room_people" property="roomPeople" jdbcType="INTEGER" />
+		</association>
+	</resultMap>
+
+
+	<!-- 查询会议 -->
+	<select id="query" resultMap="BaseResultMap">
+		SELECT m.*,e.*,r.*
+		FROM meeting m
+		LEFT OUTER JOIN emp e ON m.`meeting_emp_id`=e.`emp_id`
+		LEFT OUTER JOIN
+		room r ON m.`meeting_room_id`=r.`room_id`
+	</select>
+
+	<!-- 根据名字查询会议 -->
+	<select id="queryByName" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		SELECT m.*,e.*,r.*
+		FROM meeting m
+		LEFT OUTER JOIN emp e ON
+		m.`meeting_emp_id`=e.`emp_id`
+		LEFT OUTER JOIN room r ON
+		m.`meeting_room_id`=r.`room_id`
+		WHERE
+		e.`emp_login_name`=#{empLoginName}
+	</select>
+
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from meeting
+		where meeting_id = #{meetingId,jdbcType=INTEGER}
+	</delete>
+	
+	<insert id="insert" parameterType="com.dlnu.F5.pojo.Meeting">
+		insert into meeting (meeting_id, meeting_room_id, meeting_emp_id,
+		meeting_content, meeting_start, meeting_end
+		)
+		values (default, #{room.roomId,jdbcType=INTEGER},
+		#{emp.empId,jdbcType=INTEGER},
+		#{meetingContent,jdbcType=VARCHAR}, #{meetingStart,jdbcType=TIMESTAMP}, #{meetingEnd,jdbcType=TIMESTAMP}
+		)
+	</insert>
+	
+	<update id="update" parameterType="com.dlnu.F5.pojo.Meeting">
+		update meeting 
+		set meeting_start=#{meetingStart,jdbcType=TIMESTAMP},
+		meeting_end=#{meetingEnd,jdbcType=TIMESTAMP}
+		where meeting_id=#{meetingId}
+	</update>
+
+</mapper>

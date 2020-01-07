@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dlnu.F5.dao.ThingsMapper" >
+  <resultMap id="BaseResultMap" type="com.dlnu.F5.pojo.Things" >
+    <id column="things_id" property="thingsId" jdbcType="INTEGER" />
+    <result column="things_name" property="thingsName" jdbcType="VARCHAR" />
+    <result column="things_type" property="thingsType" jdbcType="VARCHAR" />
+    <result column="things_spec" property="thingsSpec" jdbcType="VARCHAR" />
+    <result column="things_money" property="thingsMoney" jdbcType="INTEGER" />
+    <result column="things_number" property="thingsNumber" jdbcType="INTEGER" />
+    <result column="things_use" property="thingsUse" jdbcType="INTEGER" />
+  </resultMap>
+  
+  	<insert id="insert" parameterType="com.dlnu.F5.pojo.Things" >
+    insert into things (things_id, things_name, things_type, 
+      things_spec, things_money, things_number, 
+      things_use)
+    values (default, #{thingsName,jdbcType=VARCHAR}, #{thingsType,jdbcType=VARCHAR}, 
+      #{thingsSpec,jdbcType=VARCHAR}, #{thingsMoney,jdbcType=INTEGER}, #{thingsNumber,jdbcType=INTEGER}, 
+      #{thingsUse,jdbcType=INTEGER})
+  </insert>
+	
+	<update id="update" parameterType="com.dlnu.F5.pojo.Things">
+		update things
+		set things_name = #{thingsName,jdbcType=VARCHAR},
+		things_type = #{thingsType,jdbcType=VARCHAR},
+		things_spec = #{thingsSpec,jdbcType=VARCHAR},
+		things_money = #{thingsMoney,jdbcType=INTEGER},
+		things_number = #{thingsNumber,jdbcType=INTEGER}
+		where things_id = #{thingsId,jdbcType=INTEGER}
+		
+	</update>
+	
+	<update id="updateNumber" parameterType="com.dlnu.F5.pojo.Things">
+		update things
+		set things_number = #{thingsNumber,jdbcType=INTEGER},
+      	things_use = #{thingsUse,jdbcType=INTEGER}
+		where things_id = #{thingsId,jdbcType=INTEGER}
+	</update>
+	
+	<select id="queryById1" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    	select *
+    	from things
+    	where things_id = #{thingsId,jdbcType=INTEGER}
+  	</select>
+  	
+  	<select id="queryById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    	select *
+    	from things
+    	where things_id = #{thingsId,jdbcType=INTEGER}
+  	</select>
+  
+  	<delete id="delete" parameterType="java.lang.Integer" >
+    	delete from things
+    	where things_id = #{thingsId,jdbcType=INTEGER}
+  	</delete>
+  	
+  	<select id="query" resultMap="BaseResultMap">
+		select * from things
+	</select>
+
+	<select id="queryByName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    	select *
+    	from things
+    	where things_name = #{thingsName}
+  	</select>
+  	
+  	<select id="queryByType" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    	select *
+    	from things
+    	where things_type = #{thingsType}
+  	</select>
+  
+</mapper>

@@ -1,0 +1,140 @@
+
+*, *:after, *:before { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
+body, html { font-size: 100%; padding: 0; margin: 0;}
+a {
+	color: #178FE5;
+	text-decoration: none;
+}
+a:hover, a:active {
+	color: #8B0000;
+}
+
+
+.grid {
+	padding: 0.1px 0.1px 0px 0.1px;
+	max-width: 1300px;
+	margin: 0 auto;
+	list-style: none;
+	text-align: center;
+}
+
+.grid li {
+	display: inline-block;
+	/*width: 500px;*/
+	margin: 0;
+	/*padding: 1px;*/
+	text-align: left;
+	position: relative;
+}
+
+.grid figure {
+	margin: 0;
+	position: relative;
+}
+
+.grid figure img {
+	height: 250px;
+	max-width: 100%;
+	display: block;
+	position: relative;
+}
+
+/*滑动块*/
+.grid figcaption {
+	position: absolute;
+	top: 0;
+	left: 0;
+	padding: 20px;
+	background: #def1ff;
+	color: #99000E;
+}
+
+.grid figcaption h2 {
+	margin: 0;
+	padding: 0;
+	color: #33000d;
+}
+
+.grid figcaption span:before {
+	content: 'by ';
+}
+
+.grid figcaption a {
+	text-align: center;
+	padding: 5px 10px;
+	border-radius: 2px;
+	display: inline-block;
+	background: #52a8ff;
+	color: #380099;
+}
+   
+/* 说明文字样式 4 */
+.cs-style-4 li {
+	-webkit-perspective: 1700px;
+	-moz-perspective: 1700px;
+	perspective: 1700px;
+	-webkit-perspective-origin: 0 50%;
+	-moz-perspective-origin: 0 50%;
+	perspective-origin: 0 50%;
+}
+
+.cs-style-4 figure {
+	-webkit-transform-style: preserve-3d;
+	-moz-transform-style: preserve-3d;
+	transform-style: preserve-3d;
+}
+
+/*滑动照片隐藏*/
+.cs-style-4 figure{
+	overflow: hidden;
+}
+
+.cs-style-4 figure img {
+	-webkit-transition: -webkit-transform 0.4s;
+	-moz-transition: -moz-transform 0.4s;
+	transition: transform 0.4s;
+}
+
+.no-touch .cs-style-4 figure:hover img,
+.cs-style-4 figure.cs-hover img {
+	-webkit-transform: translateX(25%);
+	-moz-transform: translateX(25%);
+	-ms-transform: translateX(25%);
+	transform: translateX(25%);
+}
+
+.cs-style-4 figcaption {
+	height: 100%;
+	width: 50%;
+	opacity: 0;
+	-webkit-backface-visibility: hidden;
+	-moz-backface-visibility: hidden;
+	backface-visibility: hidden;
+	-webkit-transform-origin: 0 0;
+	-moz-transform-origin: 0 0;
+	transform-origin: 0 0;
+	-webkit-transform: rotateY(-90deg);
+	-moz-transform: rotateY(-90deg);
+	transform: rotateY(-90deg);
+	-webkit-transition: -webkit-transform 0.4s, opacity 0.1s 0.3s;
+	-moz-transition: -moz-transform 0.4s, opacity 0.1s 0.3s;
+	transition: transform 0.4s, opacity 0.1s 0.3s;
+}
+
+.no-touch .cs-style-4 figure:hover figcaption,
+.cs-style-4 figure.cs-hover figcaption {
+	opacity: 1;
+	-webkit-transform: rotateY(0deg);
+	-moz-transform: rotateY(0deg);
+	transform: rotateY(0deg);
+	-webkit-transition: -webkit-transform 0.4s, opacity 0.1s;
+	-moz-transition: -moz-transform 0.4s, opacity 0.1s;
+	transition: transform 0.4s, opacity 0.1s;
+}
+
+.cs-style-4 figcaption a {
+	position: absolute;
+	bottom: 20px;
+	right: 20px;
+}
+

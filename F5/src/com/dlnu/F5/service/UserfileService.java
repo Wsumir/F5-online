@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.dlnu.F5.dao.EmpMapper;
+import com.dlnu.F5.dao.EmpMapper1;
 import com.dlnu.F5.dao.UserfileMapper;
 import com.dlnu.F5.pojo.Emp;
 import com.dlnu.F5.pojo.Expatriate;

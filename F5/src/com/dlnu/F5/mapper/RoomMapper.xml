@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dlnu.F5.dao.RoomMapper">
+
+	<resultMap id="BaseResultMap" type="com.dlnu.F5.pojo.Room">
+		<id column="room_id" property="roomId" jdbcType="INTEGER" />
+		<result column="room_name" property="roomName" jdbcType="VARCHAR" />
+		<result column="room_people" property="roomPeople" jdbcType="INTEGER" />
+	</resultMap>
+
+    <select id="query" resultMap="BaseResultMap">
+		SELECT * 
+		FROM room
+	</select>
+
+</mapper>

@@ -4,19 +4,25 @@
 	height: 100%;
 	background-size: cover;
 }
+.bg2{
+	background:url(../images/bg.jpg)!important;
+	background-size：100% 100%
+	background-size: cover;
+}
 #title{
 	position:absolute;
-	top: 300px; 
-	left: 620px;
-	font-size: 60px;
-	color: #F4623A;
+	top: 350px; 
+	left: 600px;
+	font-size: 70px;
+	color: #FFF;
+	no-repeat ;
 }
 #title1{
 	position:absolute;
-	top: 450px; 
-	left: 350px;
+	top: 500px; 
+	left: 430px;
 	font-size: 20px;
-	color: #BABABC;
+	color: #FFF;
 }
 #yincang{
 	display:none;
@@ -26,4 +32,7 @@
 }
 .form2{
 	display:none;
+}
+#f5{
+	color: #D6370C;
 }
