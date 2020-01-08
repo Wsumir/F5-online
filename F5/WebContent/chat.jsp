@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<html style="height: 1000px;">
 
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -11,7 +11,7 @@
 <script type="text/javascript">
 	var username = '${sessionScope.username}';
 	var ws;
-	var url = "ws://192.168.17.48:7777/F5/chat?username=" + username;
+	var url = "ws://192.168.17.80:7777/F5/chat?username=" + username;
 
 	window.onload = function() {
 		if ('WebSocket' in window) {
@@ -65,18 +65,18 @@
 </head>
 
 <body>
+<a href="index.html">DLNU-OA</a>
 
 
 
-
-	<div id="bor" style="margin-left: 630px;">
+	<div id="bor" style="margin-left: 550px;">
 
 		<div id="container"
-			style="border: 1px solid black; width: 400px; height: 400px; float: left;">
+			style="border: 1px solid black; width: 700px; height: 700px; float: left;">
 
-			<div id="content" style="height: 350px;"></div>
+			<div id="content" style="height: 650px;"></div>
 
-			<div style="border-top: 1px solid black; width: 400px; height: 50px;">
+			<div style="border-top: 1px solid black; width: 700px; height: 50px;">
 				<input id="msg" />
 				<button onclick="subSend();">send</button>
 			</div>
@@ -84,7 +84,7 @@
 		</div>
 
 		<div id="userList"
-			style="border: 1px solid black; width: 100px; height: 400px; float: left;"></div>
+			style="border: 1px solid black; width: 100px; height: 700px; float: left;"></div>
 
 	</div>
 

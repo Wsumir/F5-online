@@ -4,6 +4,8 @@ package com.dlnu.F5.controller;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -75,11 +77,17 @@ public class EmpController1 {
 	
 	@ResponseBody
 	@RequestMapping("/emp1/checkEmail")
-	public String checkEmail(HttpServletRequest request,HttpServletResponse response)
+	public Integer checkEmail(HttpServletRequest request,HttpServletResponse response) throws AddressException, MessagingException, InterruptedException
 	{
 		
+		String loginName = (String)request.getSession().getAttribute("empLoginName");
+		Emp emp = service.queryByName(loginName);
 		
-		return null;
+		Integer empId=emp.getEmpId();
+		
+		Integer random = service.checkEmail(empId);
+			
+		return random;
 	}
 	
 	

@@ -403,9 +403,7 @@
 						}
 
 						//调用后端功能
-						$.get(baseUrl + '/things/delete', {
-							thingsId: thingsId
-						}, function(data) {
+						$.get(baseUrl + '/things/delete', {thingsId:thingsId}, function(data) {
 
 							layer.msg('删除资产成功');
 
